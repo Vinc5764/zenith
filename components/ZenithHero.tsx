@@ -41,7 +41,7 @@ import image from '../public/jason.jpg'
             <Link href="/contact" className="hover:text-[#c9a55a]">Contact</Link>
           </div>
           <div className="hidden md:flex space-x-4 items-center">
-            <Link href="/signin" className="hover:text-[#c9a55a]">Sign In</Link>
+            <Link href="/sign-in" className="hover:text-[#c9a55a]">Sign In</Link>
             <button className="bg-[#c9a55a] text-[#001f3f] px-4 py-2 rounded">Reserved Our Services</button>
           </div>
           <button className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
@@ -57,7 +57,7 @@ import image from '../public/jason.jpg'
             <Link href="/news" className="block py-2 hover:text-[#c9a55a]">News</Link>
             <Link href="/pages" className="block py-2 hover:text-[#c9a55a]">Pages</Link>
             <Link href="/contact" className="block py-2 hover:text-[#c9a55a]">Contact</Link>
-            <Link href="/signin" className="block py-2 hover:text-[#c9a55a]">Sign In</Link>
+            <Link href="/sign-in" className="block py-2 hover:text-[#c9a55a]">Sign In</Link>
             <button className="bg-[#c9a55a] text-[#001f3f] px-4 py-2 rounded mt-2 w-full">Reserved Our Services</button>
           </div>
         )}
