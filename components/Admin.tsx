@@ -1,13 +1,11 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 import { useEffect, useState } from 'react';
-import { Bell, LogOut, Upload, User, PlusCircle, CheckCircle } from 'lucide-react';
+import { Bell, LogOut, Upload, User, PlusCircle, CheckCircle, Sun, Moon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Check, ChevronsUpDown } from "lucide-react";
-import { CircleCheckIcon } from "lucide-react";
 import {
   Command,
   CommandEmpty,
@@ -21,12 +19,10 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import axios from 'axios';
 import { cn } from '@/lib/utils';
 import { uploadFile } from '@/lib/upload';
-
 
 export default function AdminDashboard() {
   const [selectedPartner, setSelectedPartner] = useState('');
@@ -38,18 +34,17 @@ export default function AdminDashboard() {
   const [partnerDetails, setPartnerDetails] = useState({ name: '', email: '', contact: '', password: '' });
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState(null);
- const [customers, setCustomers] = useState<any>([]);
+  const [customers, setCustomers] = useState<any>([]);
   const [selectedCustomer, setSelectedCustomer] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
   const [open, setOpen] = useState(false);
+  const [theme, setTheme] = useState('dark');
+
   const handleFileUpload = async(event: any) => {
     const selectedFile = event.target.files[0];
-   if (selectedFile) {
+    if (selectedFile) {
       try {
         const response = await uploadFile(selectedFile);
-        setUploadedFile(response.secure_url); // Adjust this based on Cloudinary response structure
-        // setUploadedFile(selectedFile);
+        setUploadedFile(response.secure_url);
         console.log(response);
       } catch (error) {
         console.error("File upload failed:", error);
@@ -57,29 +52,22 @@ export default function AdminDashboard() {
     }
   };
 
-   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault(); // Prevent default form submission behavior
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     try {
       const response = await axios.post('http://localhost:3001/api/partner', {
         partnerId: selectedCustomer,
         capitalInvested,
         interestAccrued,
-         equity
+        equity
       });
-
       console.log('Data saved:', response.data);
-      // Optionally show a success message or reset form fields
     } catch (error) {
       console.error('Error submitting data:', error);
     }
   };
-  // const handleSubmit = (event: any) => {
-  //   event.preventDefault();
-  //   console.log('Submitting data:', { selectedPartner, capitalInvested, interestAccrued, equity, uploadedFile });
-  //   // Here you would typically send the data to your backend
-  // };
 
-    useEffect(() => {
+  useEffect(() => {
     async function fetchCustomers() {
       try {
         const response = await axios.get(`http://localhost:3001/api/partner`);
@@ -93,61 +81,80 @@ export default function AdminDashboard() {
         console.error("Failed to fetch customers", error);
       }
     }
-
     fetchCustomers();
   }, []);
 
-
-const handleAddPartnerSubmit = async (e: any) => {
-  e.preventDefault();
-  
-  if (partnerDetails.name && partnerDetails.email && partnerDetails.contact && partnerDetails.password) {
-    try {
-      const response = await fetch('http://localhost:3001/api/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(partnerDetails),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        setIsSuccess(true);
-        setError(null);
-        setIsPartnerModalOpen(false);
-        console.log('Partner created successfully:', data);
-      } else {
-        const errorData = await response.json();
-        setError(errorData.message || 'Failed to create partner');
+  const handleAddPartnerSubmit = async (e: any) => {
+    e.preventDefault();
+    if (partnerDetails.name && partnerDetails.email && partnerDetails.contact && partnerDetails.password) {
+      try {
+        const response = await fetch('http://localhost:3001/api/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(partnerDetails),
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setIsSuccess(true);
+          setError(null);
+          setIsPartnerModalOpen(false);
+          console.log('Partner created successfully:', data);
+        } else {
+          const errorData = await response.json();
+          setError(errorData.message || 'Failed to create partner');
+          setIsSuccess(false);
+        }
+      } catch (error) {
+        setError('An error occurred while creating the partner');
         setIsSuccess(false);
+        console.error('Error:', error);
       }
-    } catch (error) {
-      setError('An error occurred while creating the partner');
+    } else {
+      setError('All fields are required!');
       setIsSuccess(false);
-      console.error('Error:', error);
     }
-  } else {
-    setError('All fields are required!');
-    setIsSuccess(false);
-  }
-};
+  };
 
+  useEffect(() => {
+    document.body.className = theme;
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prevTheme => prevTheme === 'dark' ? 'light' : 'dark');
+  };
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <header className="bg-white shadow-sm">
+    <div className={`min-h-screen ${theme === 'dark' ? 'bg-[#001f3f] text-white' : 'bg-gray-100 text-[#001f3f]'}`}>
+      <header className={`${theme === 'dark' ? 'bg-[#002a4f]' : 'bg-white'} shadow-sm`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-gray-900">CAN Partner</h1>
+          <h1 className={`text-2xl font-bold ${theme === 'dark' ? 'text-[#c9a55a]' : 'text-[#001f3f]'}`}>CAN Partner</h1>
           <div className="flex items-center space-x-4">
-            <Button variant="ghost" size="icon">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={toggleTheme}
+              className={`${theme === 'dark' ? 'text-[#c9a55a] hover:text-white hover:bg-[#c9a55a]' : 'text-[#001f3f] hover:text-[#c9a55a] hover:bg-gray-200'}`}
+            >
+              {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+            </Button>
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className={`${theme === 'dark' ? 'text-[#c9a55a] hover:text-white hover:bg-[#c9a55a]' : 'text-[#001f3f] hover:text-[#c9a55a] hover:bg-gray-200'}`}
+            >
               <Bell className="h-5 w-5" />
             </Button>
             <div className="flex items-center space-x-2">
-              <User className="h-5 w-5" />
-              <span className="text-sm font-medium">Admin Name</span>
+              <User className={`h-5 w-5 ${theme === 'dark' ? 'text-[#c9a55a]' : 'text-[#001f3f]'}`} />
+              <span className={`text-sm font-medium ${theme === 'dark' ? 'text-white' : 'text-[#001f3f]'}`}>Admin Name</span>
             </div>
-            <Button variant="ghost" size="sm">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className={`${theme === 'dark' ? 'text-[#c9a55a] hover:text-white hover:bg-[#c9a55a]' : 'text-[#001f3f] hover:text-[#c9a55a] hover:bg-gray-200'}`}
+            >
               <LogOut className="h-5 w-5 mr-2" />
               Logout
             </Button>
@@ -157,217 +164,261 @@ const handleAddPartnerSubmit = async (e: any) => {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
         <div className="flex justify-between">
-          <Button  size="lg" onClick={() => setIsPartnerModalOpen(true)}>
+          <Button size="lg" className={`${theme === 'dark' ? 'bg-[#c9a55a] text-[#001f3f] hover:bg-[#d9b56a]' : 'bg-[#001f3f] text-white hover:bg-[#002a4f]'}`} onClick={() => setIsPartnerModalOpen(true)}>
             <PlusCircle className="mr-2 h-5 w-5" />
             Add Partner
           </Button>
-          <Button  size="lg">
+          <Button size="lg" className={`${theme === 'dark' ? 'bg-[#c9a55a] text-[#001f3f] hover:bg-[#d9b56a]' : 'bg-[#001f3f] text-white hover:bg-[#002a4f]'}`}>
             View All Partners
           </Button>
         </div>
 
-         <form onSubmit={handleSubmit} className="space-y-8">
-          <Card>
+        <form onSubmit={handleSubmit} className="space-y-8">
+          <Card className={`${theme === 'dark' ? 'bg-[#002a4f] border-[#c9a55a]' : 'bg-white border-gray-200'}`}>
             <CardHeader>
-              <CardTitle>Partner Selection</CardTitle>
+              <CardTitle className={theme === 'dark' ? 'text-[#c9a55a]' : 'text-[#001f3f]'}>Partner Selection</CardTitle>
             </CardHeader>
             <CardContent>
-                <div className="space-y-2 flex flex-col">
-              <Label htmlFor="customer">Select Customer</Label>
-              <Popover open={open} onOpenChange={setOpen}>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    role="combobox"
-                    aria-expanded={open}
-                    className=" justify-between"
-                  >
-                    {selectedCustomer
-                      ? customers.find(
-                          (customer: any) => customer.value === selectedCustomer
-                        )?.label
-                      : "Select customer..."}
-                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className=" p-0">
-                  <Command>
-                    <CommandInput placeholder="Search customer..." />
-                    <CommandList>
-                      <CommandEmpty>No customer found.</CommandEmpty>
-                      <CommandGroup>
-                        {customers.map((customer: any) => (
-                          <CommandItem
-                            key={customer.value}
-                            value={customer.value}
-                            onSelect={(currentValue) => {
-                              setSelectedCustomer(
-                                currentValue === selectedCustomer
-                                  ? ""
-                                  : currentValue
-                              );
-                              setOpen(false);
-                            }}
-                          >
-                            <Check
-                              className={cn(
-                                "mr-2 h-4 w-4",
-                                selectedCustomer === customer.value
-                                  ? "opacity-100"
-                                  : "opacity-0"
-                              )}
-                            />
-                            {customer.label}
-                          </CommandItem>
-                        ))}
-                      </CommandGroup>
-                    </CommandList>
-                  </Command>
-                </PopoverContent>
-              </Popover>
-            </div>
+              <div className="space-y-2 flex flex-col">
+                <Label htmlFor="customer" className={theme === 'dark' ? 'text-white' : 'text-[#001f3f]'}>Select Customer</Label>
+                <Popover open={open} onOpenChange={setOpen}>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      role="combobox"
+                      aria-expanded={open}
+                      className={`${theme === 'dark' ? 'justify-between bg-[#001f3f] text-white border-[#c9a55a] hover:bg-[#002a4f]' : 'justify-between bg-white text-[#001f3f] border-gray-300 hover:bg-gray-100'}`}
+                    >
+                      {selectedCustomer
+                        ? customers.find(
+                            (customer: any) => customer.value === selectedCustomer
+                          )?.label
+                        : "Select customer..."}
+                      <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className={`${theme === 'dark' ? 'bg-[#002a4f] text-white border-[#c9a55a] p-0' : 'bg-white text-[#001f3f] border-gray-300 p-0'}`}>
+                    <Command className="bg-transparent">
+                      <CommandInput placeholder="Search customer..." className={theme === 'dark' ? 'text-white' : 'text-[#001f3f]'} />
+                      <CommandList>
+                        <CommandEmpty>No customer found.</CommandEmpty>
+                        <CommandGroup>
+                          {customers.map((customer: any) => (
+                            <CommandItem
+                              key={customer.value}
+                              value={customer.value}
+                              onSelect={(currentValue) => {
+                                setSelectedCustomer(
+                                  currentValue === selectedCustomer
+                                    ? ""
+                                    : currentValue
+                                );
+                                setOpen(false);
+                              }}
+                              className={`${theme === 'dark' ? 'text-white hover:bg-[#001f3f]' : 'text-[#001f3f] hover:bg-gray-100'}`}
+                            >
+                              <Check
+                                className={cn(
+                                  "mr-2 h-4 w-4",
+                                  selectedCustomer === customer.value
+                                    ? "opacity-100"
+                                    : "opacity-0"
+                                )}
+                              />
+                              {customer.label}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </CommandList>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
+              </div>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className={`${theme === 'dark' ? 'bg-[#002a4f] border-[#c9a55a]' : 'bg-white border-gray-200'}`}>
             <CardHeader>
-              <CardTitle>Capital Invested</CardTitle>
+              <CardTitle className={theme === 'dark' ? 'text-[#c9a55a]' : 'text-[#001f3f]'}>Capital Invested</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <Label htmlFor="totalCapital">Total Capital Invested</Label>
+                <Label htmlFor="totalCapital" className={theme === 'dark' ? 'text-white' : 'text-[#001f3f]'}>Total Capital Invested</Label>
                 <Input
                   id="totalCapital"
                   type="number"
                   value={capitalInvested.total}
                   onChange={(e) => setCapitalInvested({ ...capitalInvested, total: parseFloat(e.target.value) })}
+                  className={`${
+                    theme === 'dark'
+                      ? 'bg-[#001f3f] text-white border-[#c9a55a] focus:ring-[#c9a55a]'
+                      : 'bg-white text-[#001f3f] border-gray-300 focus:ring-[#001f3f]'
+                  }`}
                 />
               </div>
               <div>
-                <Label htmlFor="portfolio1Capital">Portfolio 1 Capital</Label>
+                <Label htmlFor="portfolio1Capital" className={theme === 'dark' ? 'text-white' : 'text-[#001f3f]'}>Portfolio 1 Capital</Label>
                 <Input
                   id="portfolio1Capital"
                   type="number"
                   value={capitalInvested.portfolio1}
                   onChange={(e) => setCapitalInvested({ ...capitalInvested, portfolio1: parseFloat(e.target.value) })}
+                  className={`${
+                    theme === 'dark'
+                      ? 'bg-[#001f3f] text-white border-[#c9a55a] focus:ring-[#c9a55a]'
+                      : 'bg-white text-[#001f3f] border-gray-300 focus:ring-[#001f3f]'
+                  }`}
                 />
               </div>
               <div>
-                <Label htmlFor="portfolio2Capital">Portfolio 2 Capital</Label>
+                <Label htmlFor="portfolio2Capital" className={theme === 'dark' ? 'text-white' : 'text-[#001f3f]'}>Portfolio 2 Capital</Label>
                 <Input
                   id="portfolio2Capital"
                   type="number"
                   value={capitalInvested.portfolio2}
                   onChange={(e) => setCapitalInvested({ ...capitalInvested, portfolio2: parseFloat(e.target.value) })}
+                  className={`${
+                    theme === 'dark'
+                      ? 'bg-[#001f3f] text-white border-[#c9a55a] focus:ring-[#c9a55a]'
+                      : 'bg-white text-[#001f3f] border-gray-300 focus:ring-[#001f3f]'
+                  }`}
                 />
               </div>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className={`${theme === 'dark' ? 'bg-[#002a4f] border-[#c9a55a]' : 'bg-white border-gray-200'}`}>
             <CardHeader>
-              <CardTitle>Interest Accrued</CardTitle>
+              <CardTitle className={theme === 'dark' ? 'text-[#c9a55a]' : 'text-[#001f3f]'}>Interest Accrued</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <Label htmlFor="totalInterest">Total Interest Accrued</Label>
+                <Label htmlFor="totalInterest" className={theme === 'dark' ? 'text-white' : 'text-[#001f3f]'}>Total Interest Accrued</Label>
                 <Input
                   id="totalInterest"
                   type="number"
                   value={interestAccrued.total}
                   onChange={(e) => setInterestAccrued({ ...interestAccrued, total: parseFloat(e.target.value) })}
+                  className={`${
+                    theme === 'dark'
+                      ? 'bg-[#001f3f] text-white border-[#c9a55a] focus:ring-[#c9a55a]'
+                      : 'bg-white text-[#001f3f] border-gray-300 focus:ring-[#001f3f]'
+                  }`}
                 />
               </div>
               <div>
-                <Label htmlFor="portfolio1Interest">Portfolio 1 Interest</Label>
+                <Label htmlFor="portfolio1Interest" className={theme === 'dark' ? 'text-white' : 'text-[#001f3f]'}>Portfolio 1 Interest</Label>
                 <Input
                   id="portfolio1Interest"
                   type="number"
                   value={interestAccrued.portfolio1}
                   onChange={(e) => setInterestAccrued({ ...interestAccrued, portfolio1: parseFloat(e.target.value) })}
+                  className={`${
+                    theme === 'dark'
+                      ? 'bg-[#001f3f] text-white border-[#c9a55a] focus:ring-[#c9a55a]'
+                      : 'bg-white text-[#001f3f] border-gray-300 focus:ring-[#001f3f]'
+                  }`}
                 />
               </div>
               <div>
-                <Label htmlFor="portfolio2Interest">Portfolio 2 Interest</Label>
+                <Label htmlFor="portfolio2Interest" className={theme === 'dark' ? 'text-white' : 'text-[#001f3f]'}>Portfolio 2 Interest</Label>
                 <Input
                   id="portfolio2Interest"
                   type="number"
                   value={interestAccrued.portfolio2}
                   onChange={(e) => setInterestAccrued({ ...interestAccrued, portfolio2: parseFloat(e.target.value) })}
+                  className={`${
+                    theme === 'dark'
+                      ? 'bg-[#001f3f] text-white border-[#c9a55a] focus:ring-[#c9a55a]'
+                      : 'bg-white text-[#001f3f] border-gray-300 focus:ring-[#001f3f]'
+                  }`}
                 />
               </div>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className={`${theme === 'dark' ? 'bg-[#002a4f] border-[#c9a55a]' : 'bg-white border-gray-200'}`}>
             <CardHeader>
-              <CardTitle>Equity Percentages</CardTitle>
+              <CardTitle className={theme === 'dark' ? 'text-[#c9a55a]' : 'text-[#001f3f]'}>Equity Percentages</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <Label htmlFor="portfolio1Equity">Portfolio 1 Equity (%)</Label>
+                <Label htmlFor="portfolio1Equity" className={theme === 'dark' ? 'text-white' : 'text-[#001f3f]'}>Portfolio 1 Equity (%)</Label>
                 <Input
                   id="portfolio1Equity"
                   type="number"
                   value={equity.portfolio1}
                   onChange={(e) => setEquity({ ...equity, portfolio1: parseFloat(e.target.value) })}
+                  className={`${
+                    theme === 'dark'
+                      ? 'bg-[#001f3f] text-white border-[#c9a55a] focus:ring-[#c9a55a]'
+                      : 'bg-white text-[#001f3f] border-gray-300 focus:ring-[#001f3f]'
+                  }`}
                 />
               </div>
               <div>
-                <Label htmlFor="portfolio2Equity">Portfolio 2 Equity (%)</Label>
+                <Label htmlFor="portfolio2Equity" className={theme === 'dark' ? 'text-white' : 'text-[#001f3f]'}>Portfolio 2 Equity (%)</Label>
                 <Input
                   id="portfolio2Equity"
                   type="number"
                   value={equity.portfolio2}
                   onChange={(e) => setEquity({ ...equity, portfolio2: parseFloat(e.target.value) })}
+                  className={`${
+                    theme === 'dark'
+                      ? 'bg-[#001f3f] text-white border-[#c9a55a] focus:ring-[#c9a55a]'
+                      : 'bg-white text-[#001f3f] border-gray-300 focus:ring-[#001f3f]'
+                  }`}
                 />
               </div>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className={`${theme === 'dark' ? 'bg-[#002a4f] border-[#c9a55a]' : 'bg-white border-gray-200'}`}>
             <CardHeader>
-              <CardTitle>Reports Upload</CardTitle>
+              <CardTitle className={theme === 'dark' ? 'text-[#c9a55a]' : 'text-[#001f3f]'}>Reports  Upload</CardTitle>
             </CardHeader>
             <CardContent>
-              <Label htmlFor="fileUpload" className="cursor-pointer">
-                <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
-                  <Upload className="mx-auto h-12 w-12 text-gray-400" />
-                  <span className="mt-2 block text-sm font-medium text-gray-900">
+              <Label htmlFor="fileUpload" className={theme === 'dark' ? 'cursor-pointer text-white' : 'cursor-pointer text-[#001f3f]'}>
+                <div className={`${theme === 'dark' ? 'border-2 border-dashed border-[#c9a55a] rounded-lg p-6 text-center' : 'border-2 border-dashed border-gray-300 rounded-lg p-6 text-center'}`}>
+                  <Upload className={`${theme === 'dark' ? 'mx-auto h-12 w-12 text-[#c9a55a]' : 'mx-auto h-12 w-12 text-gray-500'}`} />
+                  <span className={`${theme === 'dark' ? 'mt-2 block text-sm font-medium text-white' : 'mt-2 block text-sm font-medium text-[#001f3f]'}`}>
                     Upload PDF report
                   </span>
                 </div>
                 <Input id="fileUpload" type="file" className="hidden" onChange={handleFileUpload} accept=".pdf" />
               </Label>
-              {uploadedFile && <p className="mt-2 text-sm text-gray-500"><iframe
-                src={uploadedFile}
-                title="Uploaded File"
-                width="100%"
-                height="500px"
-                frameBorder="0"
-                style={{ border: "1px solid #ccc" }}
-              /></p>}
+              {uploadedFile && (
+                <div className={`${theme === 'dark' ? 'mt-4 p-4 bg-[#001f3f] rounded-lg' : 'mt-4 p-4 bg-gray-100 rounded-lg'}`}>
+                  <p className={theme === 'dark' ? 'text-sm text-white mb-2' : 'text-sm text-[#001f3f] mb-2'}>Uploaded File:</p>
+                  <iframe
+                    src={uploadedFile}
+                    title="Uploaded File"
+                    width="100%"
+                    height="300px"
+                    className={`${theme === 'dark' ? 'border border-[#c9a55a] rounded' : 'border border-gray-300 rounded'}`}
+                  />
+                </div>
+              )}
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className={`${theme === 'dark' ? 'bg-[#002a4f] border-[#c9a55a]' : 'bg-white border-gray-200'}`}>
             <CardHeader>
-              <CardTitle>Summary</CardTitle>
+              <CardTitle className={theme === 'dark' ? 'text-[#c9a55a]' : 'text-[#001f3f]'}>Summary</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-2">
-                {/* <p><strong>Selected Partner:</strong> {selectedCustomer}</p> */}
-                <p><strong>Total Capital Invested:</strong> ${capitalInvested.total}</p>
-                <p><strong>Total Interest Accrued:</strong> ${interestAccrued.total}</p>
-                <p><strong>Portfolio 1 Equity:</strong> {equity.portfolio1}%</p>
-                <p><strong>Portfolio 2 Equity:</strong> {equity.portfolio2}%</p>
-                <p><strong>Uploaded Report:</strong> {uploadedFile ? uploadedFile.name : 'No file uploaded'}</p>
+                <p className={theme === 'dark' ? 'text-white' : 'text-[#001f3f]'}><strong>Total Capital Invested:</strong> ${capitalInvested.total}</p>
+                <p className={theme === 'dark' ? 'text-white' : 'text-[#001f3f]'}><strong>Total Interest Accrued:</strong> ${interestAccrued.total}</p>
+                <p className={theme === 'dark' ? 'text-white' : 'text-[#001f3f]'}><strong>Portfolio 1 Equity:</strong> {equity.portfolio1}%</p>
+                <p className={theme === 'dark' ? 'text-white' : 'text-[#001f3f]'}><strong>Portfolio 2 Equity:</strong> {equity.portfolio2}%</p>
+                <p className={theme === 'dark' ? 'text-white' : 'text-[#001f3f]'}><strong>Uploaded Report:</strong> {uploadedFile ? 'File uploaded' : 'No file uploaded'}</p>
               </div>
             </CardContent>
           </Card>
 
           <div className="flex justify-end">
-            <Button type="submit" size="lg">
+            <Button type="submit" size="lg" className={`${theme === 'dark' ? 'bg-[#c9a55a] text-[#001f3f] hover:bg-[#d9b56a]' : 'bg-[#001f3f] text-white hover:bg-[#002a4f]'}`}>
               Submit Partner Data
             </Button>
           </div>
@@ -376,54 +427,74 @@ const handleAddPartnerSubmit = async (e: any) => {
 
       {/* Add Partner Modal */}
       <Dialog open={isPartnerModalOpen} onOpenChange={setIsPartnerModalOpen}>
-        <DialogContent>
+        <DialogContent className={`${theme === 'dark' ? 'bg-[#002a4f] text-white border-[#c9a55a]' : 'bg-white text-[#001f3f] border-gray-200'}`}>
           <DialogHeader>
-            <DialogTitle>Add New Partner</DialogTitle>
-            <DialogDescription>Enter partner details to add a new partner</DialogDescription>
+            <DialogTitle className={theme === 'dark' ? 'text-[#c9a55a]' : 'text-[#001f3f]'}>Add New Partner</DialogTitle>
+            <DialogDescription className={theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}>Enter partner details to add a new partner</DialogDescription>
           </DialogHeader>
           <form onSubmit={handleAddPartnerSubmit} className="space-y-4">
             <div>
-              <Label htmlFor="partnerName">Name</Label>
+              <Label htmlFor="partnerName" className={theme === 'dark' ? 'text-white' : 'text-[#001f3f]'}>Name</Label>
               <Input
                 id="partnerName"
                 type="text"
                 value={partnerDetails.name}
                 onChange={(e) => setPartnerDetails({ ...partnerDetails, name: e.target.value })}
+                className={`${
+                  theme === 'dark'
+                    ? 'bg-[#001f3f] text-white border-[#c9a55a] focus:ring-[#c9a55a]'
+                    : 'bg-white text-[#001f3f] border-gray-300 focus:ring-[#001f3f]'
+                }`}
               />
             </div>
             <div>
-              <Label htmlFor="partnerEmail">Email</Label>
+              <Label htmlFor="partnerEmail" className={theme === 'dark' ? 'text-white' : 'text-[#001f3f]'}>Email</Label>
               <Input
                 id="partnerEmail"
                 type="email"
                 value={partnerDetails.email}
                 onChange={(e) => setPartnerDetails({ ...partnerDetails, email: e.target.value })}
+                className={`${
+                  theme === 'dark'
+                    ? 'bg-[#001f3f] text-white border-[#c9a55a] focus:ring-[#c9a55a]'
+                    : 'bg-white text-[#001f3f] border-gray-300 focus:ring-[#001f3f]'
+                }`}
               />
             </div>
             <div>
-              <Label htmlFor="partnerContact">Contact</Label>
+              <Label htmlFor="partnerContact" className={theme === 'dark' ? 'text-white' : 'text-[#001f3f]'}>Contact</Label>
               <Input
                 id="partnerContact"
                 type="text"
                 value={partnerDetails.contact}
                 onChange={(e) => setPartnerDetails({ ...partnerDetails, contact: e.target.value })}
+                className={`${
+                  theme === 'dark'
+                    ? 'bg-[#001f3f] text-white border-[#c9a55a] focus:ring-[#c9a55a]'
+                    : 'bg-white text-[#001f3f] border-gray-300 focus:ring-[#001f3f]'
+                }`}
               />
             </div>
             <div>
-              <Label htmlFor="partnerPassword">Password</Label>
+              <Label htmlFor="partnerPassword" className={theme === 'dark' ? 'text-white' : 'text-[#001f3f]'}>Password</Label>
               <Input
                 id="partnerPassword"
                 type="password"
                 value={partnerDetails.password}
                 onChange={(e) => setPartnerDetails({ ...partnerDetails, password: e.target.value })}
+                className={`${
+                  theme === 'dark'
+                    ? 'bg-[#001f3f] text-white border-[#c9a55a] focus:ring-[#c9a55a]'
+                    : 'bg-white text-[#001f3f] border-gray-300 focus:ring-[#001f3f]'
+                }`}
               />
             </div>
-            {error && <p className="text-red-500">{error}</p>}
+            {error && <p className={theme === 'dark' ? 'text-red-500' : 'text-red-500'}>{error}</p>}
             <div className="flex justify-end space-x-4">
-              <Button variant="secondary" onClick={() => setIsPartnerModalOpen(false)}>
+              <Button variant="outline" onClick={() => setIsPartnerModalOpen(false)} className={`${theme === 'dark' ? 'border-[#c9a55a] text-[#c9a55a] hover:bg-[#c9a55a] hover:text-[#001f3f]' : 'border-gray-300 text-gray-500 hover:bg-gray-200 hover:text-[#001f3f]'}`}>
                 Cancel
               </Button>
-              <Button type="submit" variant="primary">
+              <Button type="submit" className={`${theme === 'dark' ? 'bg-[#c9a55a] text-[#001f3f] hover:bg-[#d9b56a]' : 'bg-[#001f3f] text-white hover:bg-[#002a4f]'}`}>
                 Add Partner
               </Button>
             </div>
@@ -434,10 +505,10 @@ const handleAddPartnerSubmit = async (e: any) => {
       {/* Success Modal */}
       {isSuccess && (
         <Dialog open={isSuccess} onOpenChange={setIsSuccess}>
-          <DialogContent>
+          <DialogContent className={`${theme === 'dark' ? 'bg-[#002a4f] text-white border-[#c9a55a]' : 'bg-white text-[#001f3f] border-gray-200'}`}>
             <DialogHeader>
-              <CheckCircle className="h-12 w-12 text-green-500 mx-auto" />
-              <DialogTitle>Partner Added Successfully!</DialogTitle>
+              <CheckCircle className={`${theme === 'dark' ? 'h-12 w-12 text-[#c9a55a] mx-auto' : 'h-12 w-12 text-[#001f3f] mx-auto'}`} />
+              <DialogTitle className={theme === 'dark' ? 'text-[#c9a55a]' : 'text-[#001f3f]'}>Partner Added Successfully!</DialogTitle>
             </DialogHeader>
           </DialogContent>
         </Dialog>
