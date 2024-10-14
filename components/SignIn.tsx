@@ -1,7 +1,78 @@
-import Link from 'next/link'
-import { Mail, Lock } from 'lucide-react'
+'use client'
+
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { Mail, Lock } from 'lucide-react';
+import useTokenStore from '@/lib/store';
+import { useRouter } from 'next/navigation';
 
 export default function SignIn() {
+  // State variables to store email, password, and errors
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const { setToken } = useTokenStore();
+  const { token } = useTokenStore();
+
+  const r = useRouter();
+
+  // useEffect(() => {
+  //   if (!token) {
+  //     r.push("/sign-in");
+  //   } else {
+  //     r.push("/dashboard");
+  //   }
+  // }, [token, r]);
+
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    // Validate email and password fields
+    if (!email || !password) {
+      setError('Both fields are required');
+      return;
+    }
+
+    setError(''); // Reset error message
+    setLoading(true); // Set loading to true during request
+
+    // Send the form data to the backend
+    try {
+      const res = await fetch('http://localhost:3001/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+
+      setToken(data?.token, data?.user?.role, data?.user?.name, data);
+
+      if (data.token) {
+        r.push("/dashboard/");
+      }
+      
+      if (!res.ok) {
+        throw new Error(data.message || 'An error occurred');
+      }
+
+      // Handle successful sign-in (e.g., redirect or store token)
+      console.log('Sign-in successful:', data);
+      // You might want to redirect the user to a dashboard or another page here
+      // For example: router.push('/dashboard');
+
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false); // Stop loading state after the request is done
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#001f3f] flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -21,7 +92,7 @@ export default function SignIn() {
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-[#002a4f] py-8 px-4 shadow sm:rounded-lg sm:px-10">
-          <form className="space-y-6" action="#" method="POST">
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-300">
                 Email address
@@ -38,6 +109,8 @@ export default function SignIn() {
                   required
                   className="bg-[#001f3f] text-white block w-full pl-10 pr-3 py-2 border border-gray-600 rounded-md leading-5 focus:outline-none focus:ring-[#c9a55a] focus:border-[#c9a55a] sm:text-sm"
                   placeholder="you@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
             </div>
@@ -58,9 +131,13 @@ export default function SignIn() {
                   required
                   className="bg-[#001f3f] text-white block w-full pl-10 pr-3 py-2 border border-gray-600 rounded-md leading-5 focus:outline-none focus:ring-[#c9a55a] focus:border-[#c9a55a] sm:text-sm"
                   placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
             </div>
+
+            {error && <div className="text-red-500 text-sm">{error}</div>}
 
             <div className="flex items-center justify-between">
               <div className="flex items-center">
@@ -86,8 +163,9 @@ export default function SignIn() {
               <button
                 type="submit"
                 className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-[#001f3f] bg-[#c9a55a] hover:bg-[#d9b56a] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#c9a55a]"
+                disabled={loading}
               >
-                Sign in
+                {loading ? 'Signing in...' : 'Sign in'}
               </button>
             </div>
           </form>
@@ -109,6 +187,7 @@ export default function SignIn() {
                   className="w-full inline-flex justify-center py-2 px-4 border border-gray-600 rounded-md shadow-sm bg-[#001f3f] text-sm font-medium text-gray-300 hover:bg-[#002a4f]"
                 >
                   <span className="sr-only">Sign in with Google</span>
+                  {/* Google Icon */}
                   <svg className="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z" />
                   </svg>
@@ -121,12 +200,9 @@ export default function SignIn() {
                   className="w-full inline-flex justify-center py-2 px-4 border border-gray-600 rounded-md shadow-sm bg-[#001f3f] text-sm font-medium text-gray-300 hover:bg-[#002a4f]"
                 >
                   <span className="sr-only">Sign in with GitHub</span>
-                  <svg className="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
-                    <path
-                      fillRule="evenodd"
-                      d="M10 0C4.477 0 0 4.484 0 10.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0020 10.017C20 4.484 15.522 0 10 0z"
-                      clipRule="evenodd"
-                    />
+                  {/* GitHub Icon */}
+                  <svg className="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 0C5.373 0 0 5.373 0 12c0 5.303 3.438 9.8 8.207 11.387.6.11.793-.26.793-.577v-2.173c-3.338.727-4.033-1.653-4.033-1.653-.547-1.39-1.333-1.753-1.333-1.753-1.093-.747.087-.733.087-.733 1.207.087 1.84 1.233 1.84 1.233 1.087 1.86 2.827 1.32 3.52 1.007.107-.787.427-1.32.773-1.627-2.667-.307-5.467-1.347-5.467-5.987 0-1.327.467-2.4 1.227-3.253-.12-.307-.533-1.547.12-3.227 0 0 1.013-.333 3.32 1.24.96-.267 1.973-.4 2.987-.4s2.027.133 2.987.4c2.307-1.573 3.32-1.24 3.32-1.24.653 1.68.24 2.92.12 3.227.76.853 1.227 1.933 1.227 3.253 0 4.653-2.8 5.667-5.467 5.973.453.387.827 1.153.827 2.373v3.493c0 .32.187.693.793.573C20.563 21.8 24 17.307 24 12c0-6.627-5.373-12-12-12z" />
                   </svg>
                 </a>
               </div>
@@ -135,5 +211,5 @@ export default function SignIn() {
         </div>
       </div>
     </div>
-  )
+  );
 }
