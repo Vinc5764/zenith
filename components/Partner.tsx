@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Download, LogOut, User } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -7,17 +7,38 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import useTokenStore from '@/lib/store';
+import axios from 'axios';
 
 export default function PartnerDashboard() {
   const [withdrawalAmount, setWithdrawalAmount] = useState('')
   const [withdrawalPortfolio, setWithdrawalPortfolio] = useState('')
   const [withdrawalReason, setWithdrawalReason] = useState('')
-
+const { userType, datas, setUserType, setNames }: any = useTokenStore();
   const handleWithdrawalSubmit = (event) => {
     event.preventDefault()
     // Here you would typically send the withdrawal request to your backend
     console.log('Withdrawal request:', { withdrawalAmount, withdrawalPortfolio, withdrawalReason })
   }
+
+
+   useEffect(() => {
+    const fetchMembers = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3001/api/partner/partner-details`, {
+          params: {
+            partner: datas._id,
+          },
+        });
+        console.log(response.data);
+        // setMembers(response.data);
+      } catch (error) {
+        console.error("Error fetching members:", error);
+      }
+    };
+
+    fetchMembers();
+  }, [datas._id]);
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -27,7 +48,7 @@ export default function PartnerDashboard() {
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-2">
               <User className="h-5 w-5" />
-              <span className="text-sm font-medium">Partner Name</span>
+              <span className="text-sm font-medium">{datas?.user.name}</span>
             </div>
             <Button variant="ghost" size="sm">
               <LogOut className="h-5 w-5 mr-2" />
