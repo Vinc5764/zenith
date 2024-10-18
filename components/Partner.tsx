@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 import { useEffect, useState } from 'react'
 import { Download, LogOut, User, Sun, Moon } from 'lucide-react'
@@ -14,7 +15,7 @@ export default function PartnerDashboard() {
   const [withdrawalAmount, setWithdrawalAmount] = useState('')
   const [withdrawalPortfolio, setWithdrawalPortfolio] = useState('')
   const [withdrawalReason, setWithdrawalReason] = useState('')
-  const { userType, datas, setUserType, setNames }: any = useTokenStore();
+  const { datas, }: any = useTokenStore();
   const [theme, setTheme] = useState('dark');
 
   const handleWithdrawalSubmit = (event) => {

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react';
+import {  useState } from 'react';
 import Link from 'next/link';
 import { Mail, Lock } from 'lucide-react';
 import useTokenStore from '@/lib/store';
@@ -13,7 +13,7 @@ export default function SignIn() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const { setToken } = useTokenStore();
-  const { token } = useTokenStore();
+  // const { token } = useTokenStore();
 
   const r = useRouter();
 

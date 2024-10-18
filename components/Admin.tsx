@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 import { useEffect, useState } from 'react';
 import { Bell, LogOut, Upload, User, PlusCircle, CheckCircle, Sun, Moon } from 'lucide-react';
@@ -25,7 +26,7 @@ import { cn } from '@/lib/utils';
 import { uploadFile } from '@/lib/upload';
 
 export default function AdminDashboard() {
-  const [selectedPartner, setSelectedPartner] = useState('');
+  // const [selectedPartner, setSelectedPartner] = useState('');
   const [capitalInvested, setCapitalInvested] = useState({ total: 0, portfolio1: 0, portfolio2: 0 });
   const [interestAccrued, setInterestAccrued] = useState({ total: 0, portfolio1: 0, portfolio2: 0 });
   const [equity, setEquity] = useState({ portfolio1: 0, portfolio2: 0 });
