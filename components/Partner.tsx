@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 import { useEffect, useState } from 'react'
 import { Download, LogOut, User, Sun, Moon } from 'lucide-react'

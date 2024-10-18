@@ -24,10 +24,10 @@ import AdminDashboard from "@/components/Admin";
 const baseURL = "http://localhost:3001";
 
 const HomePage = () => {
-  const { userType, datas, setUserType, setNames }: any = useTokenStore();
+  const { userType, datas, setUserType }: any = useTokenStore();
   const [resolvedUserType, setResolvedUserType] = useState<string | null>(null);
   const [showModal, setShowModal] = useState(false);
-  const [name, setName] = useState("");
+  const [name] = useState("");
   const [password, setPassword] = useState("");
 
   useEffect(() => {
