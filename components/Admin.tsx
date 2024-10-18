@@ -29,7 +29,7 @@ export default function AdminDashboard() {
   const [capitalInvested, setCapitalInvested] = useState({ total: 0, portfolio1: 0, portfolio2: 0 });
   const [interestAccrued, setInterestAccrued] = useState({ total: 0, portfolio1: 0, portfolio2: 0 });
   const [equity, setEquity] = useState({ portfolio1: 0, portfolio2: 0 });
-  const [uploadedFile, setUploadedFile] = useState(null);
+  const [uploadedFile, setUploadedFile] = useState([]);
   const [isPartnerModalOpen, setIsPartnerModalOpen] = useState(false);
   const [partnerDetails, setPartnerDetails] = useState({ name: '', email: '', contact: '', password: '' });
   const [isSuccess, setIsSuccess] = useState(false);
@@ -39,19 +39,36 @@ export default function AdminDashboard() {
   const [open, setOpen] = useState(false);
   const [theme, setTheme] = useState('dark');
 
-  const handleFileUpload = async(event: any) => {
-    const selectedFile = event.target.files[0];
-    if (selectedFile) {
+  // const handleFileUpload = async(event: any) => {
+  //   const selectedFile = event.target.files[0];
+  //   if (selectedFile) {
+  //     try {
+  //       const response = await uploadFile(selectedFile);
+  //       setUploadedFile(response.secure_url);
+  //       console.log(response);
+  //     } catch (error) {
+  //       console.error("File upload failed:", error);
+  //     }
+  //   }
+  // };
+
+
+   const handleFileUpload = async (event: any) => {
+    const selectedFiles = Array.from(event.target.files); // Convert the FileList to an array
+    if (selectedFiles.length > 0) {
       try {
-        const response = await uploadFile(selectedFile);
-        setUploadedFile(response.secure_url);
-        console.log(response);
+        const fileUploadPromises = selectedFiles.map(async (file: any) => {
+          const response = await uploadFile(file); // Upload each file
+          return response.secure_url; // Get the file URL from the response
+        });
+
+        const uploadedFileUrls = await Promise.all(fileUploadPromises); // Wait for all files to be uploaded
+        setUploadedFile((prevFiles) => [...prevFiles, ...uploadedFileUrls]); // Add new file URLs to the state
       } catch (error) {
         console.error("File upload failed:", error);
       }
     }
   };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -59,7 +76,8 @@ export default function AdminDashboard() {
         partnerId: selectedCustomer,
         capitalInvested,
         interestAccrued,
-        equity
+        equity,
+        uploadedFile
       });
       console.log('Data saved:', response.data);
     } catch (error) {
@@ -129,7 +147,7 @@ export default function AdminDashboard() {
     <div className={`min-h-screen ${theme === 'dark' ? 'bg-[#001f3f] text-white' : 'bg-gray-100 text-[#001f3f]'}`}>
       <header className={`${theme === 'dark' ? 'bg-[#002a4f]' : 'bg-white'} shadow-sm`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          <h1 className={`text-2xl font-bold ${theme === 'dark' ? 'text-[#c9a55a]' : 'text-[#001f3f]'}`}>CAN Partner</h1>
+          <h1 className={`text-2xl font-bold ${theme === 'dark' ? 'text-[#c9a55a]' : 'text-[#001f3f]'}`}>KAN</h1>
           <div className="flex items-center space-x-4">
             <Button 
               variant="ghost" 
@@ -139,16 +157,10 @@ export default function AdminDashboard() {
             >
               {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
             </Button>
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              className={`${theme === 'dark' ? 'text-[#c9a55a] hover:text-white hover:bg-[#c9a55a]' : 'text-[#001f3f] hover:text-[#c9a55a] hover:bg-gray-200'}`}
-            >
-              <Bell className="h-5 w-5" />
-            </Button>
+           
             <div className="flex items-center space-x-2">
               <User className={`h-5 w-5 ${theme === 'dark' ? 'text-[#c9a55a]' : 'text-[#001f3f]'}`} />
-              <span className={`text-sm font-medium ${theme === 'dark' ? 'text-white' : 'text-[#001f3f]'}`}>Admin Name</span>
+              <span className={`text-sm font-medium ${theme === 'dark' ? 'text-white' : 'text-[#001f3f]'}`}>Admin </span>
             </div>
             <Button 
               variant="ghost" 
@@ -334,6 +346,7 @@ export default function AdminDashboard() {
                   }`}
                 />
               </div>
+              
             </CardContent>
           </Card>
 
@@ -373,35 +386,46 @@ export default function AdminDashboard() {
             </CardContent>
           </Card>
 
-          <Card className={`${theme === 'dark' ? 'bg-[#002a4f] border-[#c9a55a]' : 'bg-white border-gray-200'}`}>
-            <CardHeader>
-              <CardTitle className={theme === 'dark' ? 'text-[#c9a55a]' : 'text-[#001f3f]'}>Reports  Upload</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <Label htmlFor="fileUpload" className={theme === 'dark' ? 'cursor-pointer text-white' : 'cursor-pointer text-[#001f3f]'}>
-                <div className={`${theme === 'dark' ? 'border-2 border-dashed border-[#c9a55a] rounded-lg p-6 text-center' : 'border-2 border-dashed border-gray-300 rounded-lg p-6 text-center'}`}>
-                  <Upload className={`${theme === 'dark' ? 'mx-auto h-12 w-12 text-[#c9a55a]' : 'mx-auto h-12 w-12 text-gray-500'}`} />
-                  <span className={`${theme === 'dark' ? 'mt-2 block text-sm font-medium text-white' : 'mt-2 block text-sm font-medium text-[#001f3f]'}`}>
-                    Upload PDF report
-                  </span>
-                </div>
-                <Input id="fileUpload" type="file" className="hidden" onChange={handleFileUpload} accept=".pdf" />
-              </Label>
-              {uploadedFile && (
-                <div className={`${theme === 'dark' ? 'mt-4 p-4 bg-[#001f3f] rounded-lg' : 'mt-4 p-4 bg-gray-100 rounded-lg'}`}>
-                  <p className={theme === 'dark' ? 'text-sm text-white mb-2' : 'text-sm text-[#001f3f] mb-2'}>Uploaded File:</p>
-                  <iframe
-                    src={uploadedFile}
-                    title="Uploaded File"
-                    width="100%"
-                    height="300px"
-                    className={`${theme === 'dark' ? 'border border-[#c9a55a] rounded' : 'border border-gray-300 rounded'}`}
-                  />
-                </div>
-              )}
-            </CardContent>
-          </Card>
+         <Card className={`${theme === 'dark' ? 'bg-[#002a4f] border-[#c9a55a]' : 'bg-white border-gray-200'}`}>
+      <CardHeader>
+        <CardTitle className={theme === 'dark' ? 'text-[#c9a55a]' : 'text-[#001f3f]'}>Reports Upload</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <Label htmlFor="fileUpload" className={theme === 'dark' ? 'cursor-pointer text-white' : 'cursor-pointer text-[#001f3f]'}>
+          <div className={`${theme === 'dark' ? 'border-2 border-dashed border-[#c9a55a] rounded-lg p-6 text-center' : 'border-2 border-dashed border-gray-300 rounded-lg p-6 text-center'}`}>
+            <Upload className={`${theme === 'dark' ? 'mx-auto h-12 w-12 text-[#c9a55a]' : 'mx-auto h-12 w-12 text-gray-500'}`} />
+            <span className={`${theme === 'dark' ? 'mt-2 block text-sm font-medium text-white' : 'mt-2 block text-sm font-medium text-[#001f3f]'}`}>
+              Upload PDF reports
+            </span>
+          </div>
+          <Input
+            id="fileUpload"
+            type="file"
+            className="hidden"
+            onChange={handleFileUpload}
+            accept=".pdf"
+            multiple // Allow multiple files to be selected
+          />
+        </Label>
 
+        {uploadedFile.length > 0 && (
+          <div className={`${theme === 'dark' ? 'mt-4 p-4 bg-[#001f3f] rounded-lg' : 'mt-4 p-4 bg-gray-100 rounded-lg'}`}>
+            <p className={theme === 'dark' ? 'text-sm text-white mb-2' : 'text-sm text-[#001f3f] mb-2'}>Uploaded Files:</p>
+            {uploadedFile.map((fileUrl, index) => (
+              <div key={index} className="mb-4">
+                <iframe
+                  src={fileUrl}
+                  title={`Uploaded File ${index + 1}`}
+                  width="100%"
+                  height="300px"
+                  className={`${theme === 'dark' ? 'border border-[#c9a55a] rounded' : 'border border-gray-300 rounded'}`}
+                />
+              </div>
+            ))}
+          </div>
+        )}
+      </CardContent>
+    </Card>
           <Card className={`${theme === 'dark' ? 'bg-[#002a4f] border-[#c9a55a]' : 'bg-white border-gray-200'}`}>
             <CardHeader>
               <CardTitle className={theme === 'dark' ? 'text-[#c9a55a]' : 'text-[#001f3f]'}>Summary</CardTitle>

@@ -4,7 +4,6 @@
 import { connectToDB } from "@/lib/connect";
 import { NextResponse } from "next/server";
 import User from "../model/user.model";
- // Assuming the Partner schema is in model/partner.model
 
 export const POST = async (req: any) => {
   try {
@@ -13,7 +12,7 @@ export const POST = async (req: any) => {
       capitalInvested,
       interestAccrued,
       equity,
-      uploadedReport,
+      uploadedFile,  // Expecting this to be an array of URLs
     } = await req.json();
     
     // Connect to the database
@@ -27,7 +26,7 @@ export const POST = async (req: any) => {
 
     // Update capital invested (total, portfolio1, portfolio2)
     if (capitalInvested) {
-      partner.capitalInvested.total = capitalInvested.total 
+      partner.capitalInvested.total = capitalInvested.total;
       partner.capitalInvested.portfolio1 = capitalInvested.portfolio1 || partner.capitalInvested.portfolio1;
       partner.capitalInvested.portfolio2 = capitalInvested.portfolio2 || partner.capitalInvested.portfolio2;
     }
@@ -45,10 +44,19 @@ export const POST = async (req: any) => {
       partner.equity.portfolio2 = equity.portfolio2 || partner.equity.portfolio2;
     }
 
-    // Update uploaded report (fileName, filePath)
-    if (uploadedReport) {
-      partner.uploadedReport.fileName = uploadedReport.fileName || partner.uploadedReport.fileName;
-      partner.uploadedReport.filePath = uploadedReport.filePath || partner.uploadedReport.filePath;
+    // Handle multiple uploaded files and update the uploadedReport array
+    if (uploadedFile && Array.isArray(uploadedFile)) {
+      uploadedFile.forEach((fileUrl: string) => {
+        const urlParts = fileUrl.split("/");
+        const fullFileName = urlParts[urlParts.length - 1];
+        const fileName = fullFileName.split("_")[0]; // Extract the name
+
+        // Push each file entry into the uploadedReport array
+        partner.uploadedReport.push({
+          fileName: fileName,
+          filePath: fileUrl,
+        });
+      });
     }
 
     // Save the updated partner details
@@ -60,20 +68,11 @@ export const POST = async (req: any) => {
   }
 };
 
-
-
-
-// import bcrypt from "bcryptjs";
-
 export const GET = async (req: any, { params }: any) => {
   try {
     // Connect to MongoDB database
     await connectToDB();
 
-    // const { mymembers } = params;
-
-    // const { searchParams } = new URL(req.url);
-    // const partner = searchParams.get("partner");
     // Retrieve all users from the database
     const users = await User.find(); // Use appropriate query if needed
 
