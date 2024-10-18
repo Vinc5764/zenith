@@ -11,8 +11,8 @@ import eventImage from '@/public/logo.jpg'
 
 const NavItem = ({ href, icon: Icon, label }) => (
   <Link href={href} className="flex items-center space-x-2 hover:text-[#c9a55a]">
-    <Icon size={20} />
-    <span className="sr-only md:not-sr-only">{label}</span>
+    <span className='max-md:hidden'><Icon size={20}  /></span>
+    <span className="">{label}</span>
   </Link>
 )
 

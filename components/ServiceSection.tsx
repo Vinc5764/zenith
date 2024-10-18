@@ -51,8 +51,8 @@ export default function Component() {
                   <Image
                     src={service.image}
                     alt={service.title}
-                    layout="fill"
-                    objectFit="cover"
+                    // layout="fill"
+                    // objectFit="center"
                     className="group-hover:scale-110 transition-transform duration-300"
                   />
                   <div className="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-30 transition-opacity duration-300" />

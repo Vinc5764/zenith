@@ -9,6 +9,7 @@ import consultingImage from '@/public/prosper.jpg'
 import accountingImage from '@/public/logo.jpg'
 import portfolioImage from '@/public/corporate.jpg'
 import complianceImage from '@/public/jason.jpg'
+import placeholder from '@/public/Placeholder.svg'
 
 export default function ServicesPage() {
   const services = [
@@ -17,9 +18,9 @@ export default function ServicesPage() {
       description: "Strategic advice to optimize your business operations and growth",
       image: consultingImage,
       items: [
-        { name: "Strategy Development", logo: "/logos/strategy.svg", url: "#" },
-        { name: "Operational Efficiency", logo: "/logos/efficiency.svg", url: "#" },
-        { name: "Digital Transformation", logo: "/logos/digital.svg", url: "#" },
+        { name: "Strategy Development", logo: placeholder, url: "#" },
+        { name: "Operational Efficiency", logo: placeholder, url: "#" },
+        { name: "Digital Transformation", logo: placeholder, url: "#" },
       ]
     },
     {
@@ -27,9 +28,9 @@ export default function ServicesPage() {
       description: "Comprehensive financial services to ensure accurate reporting and tax optimization",
       image: accountingImage,
       items: [
-        { name: "Financial Reporting", logo: "/logos/reporting.svg", url: "#" },
-        { name: "Tax Planning", logo: "/logos/tax.svg", url: "#" },
-        { name: "Bookkeeping", logo: "/logos/bookkeeping.svg", url: "#" },
+        { name: "Financial Reporting", logo: placeholder, url: "#" },
+        { name: "Tax Planning", logo: placeholder, url: "#" },
+        { name: "Bookkeeping", logo: placeholder, url: "#" },
       ]
     },
     {
@@ -37,9 +38,9 @@ export default function ServicesPage() {
       description: "Expert management of your investments to maximize returns",
       image: portfolioImage,
       items: [
-        { name: "Gracefields", subtitle: "Gidi Farm", logo: "/logos/gracefields.svg", url: "#" },
-        { name: "Cornerstone", subtitle: "Mister Kitchen", logo: "/logos/cornerstone.svg", url: "https://misterkitchen.com" },
-        { name: "Mid Stack", subtitle: "Core Bank", logo: "/logos/midstack.svg", url: "https://corebank.com" },
+        { name: "Gracefields", subtitle: "Gidi Farm", logo: placeholder, url: "#" },
+        { name: "Cornerstone", subtitle: "Mister Kitchen", logo: placeholder, url: "https://misterkitchen.com" },
+        { name: "Mid Stack", subtitle: "Core Bank", logo: placeholder, url: "https://corebank.com" },
       ]
     },
     {
@@ -47,9 +48,9 @@ export default function ServicesPage() {
       description: "Ensuring your business adheres to all relevant laws, regulations, and standards",
       image: complianceImage,
       items: [
-        { name: "Regulatory Compliance", logo: "/logos/regulatory.svg", url: "#" },
-        { name: "Risk Assessment", logo: "/logos/risk.svg", url: "#" },
-        { name: "Audit Services", logo: "/logos/audit.svg", url: "#" },
+        { name: "Regulatory Compliance", logo: placeholder, url: "#" },
+        { name: "Risk Assessment", logo: placeholder, url: "#" },
+        { name: "Audit Services", logo: placeholder, url: "#" },
       ]
     }
   ]
