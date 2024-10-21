@@ -15,7 +15,7 @@ export default function SignIn() {
 
   const r = useRouter();
 
-  const handleSubmit = async (e:any) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!email || !password) {
