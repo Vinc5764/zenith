@@ -24,12 +24,16 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import axios from 'axios';
 import { cn } from '@/lib/utils';
 import { uploadFile } from '@/lib/upload';
+import { useRouter } from 'next/navigation';
+import useTokenStore from '@/lib/store';
 
 export default function AdminDashboard() {
   // const [selectedPartner, setSelectedPartner] = useState('');
-  const [capitalInvested, setCapitalInvested] = useState({ total: 0, portfolio1: 0, portfolio2: 0 });
-  const [interestAccrued, setInterestAccrued] = useState({ total: 0, portfolio1: 0, portfolio2: 0 });
-  const [equity, setEquity] = useState({ portfolio1: 0, portfolio2: 0 });
+  const { userType, datas, setUserType, clearToken, setNames }: any = useTokenStore();
+  const router = useRouter();
+  const [capitalInvested, setCapitalInvested] = useState({ total: 0, portfolio1: 0, portfolio2: 0,portfolio3: 0  });
+  const [interestAccrued, setInterestAccrued] = useState({ total: 0, portfolio1: 0, portfolio2: 0,portfolio3: 0  });
+  const [equity, setEquity] = useState({ portfolio1: 0, portfolio2: 0 ,portfolio3: 0 });
   const [uploadedFile, setUploadedFile] = useState([]);
   const [isPartnerModalOpen, setIsPartnerModalOpen] = useState(false);
   const [partnerDetails, setPartnerDetails] = useState({ name: '', email: '', contact: '', password: '' });
@@ -38,7 +42,7 @@ export default function AdminDashboard() {
   const [customers, setCustomers] = useState<any>([]);
   const [selectedCustomer, setSelectedCustomer] = useState("");
   const [open, setOpen] = useState(false);
-  const [theme, setTheme] = useState('dark');
+  const [theme, setTheme] = useState('light');
 
   // const handleFileUpload = async(event: any) => {
   //   const selectedFile = event.target.files[0];
@@ -52,7 +56,10 @@ export default function AdminDashboard() {
   //     }
   //   }
   // };
-
+   const handleLogout = () => {
+    clearToken();
+    router.push("/sign-in");
+  };
 
    const handleFileUpload = async (event: any) => {
     const selectedFiles = Array.from(event.target.files); // Convert the FileList to an array
@@ -141,7 +148,7 @@ export default function AdminDashboard() {
   }, [theme]);
 
   const toggleTheme = () => {
-    setTheme(prevTheme => prevTheme === 'dark' ? 'light' : 'dark');
+    setTheme(prevTheme => prevTheme === 'dark' ? 'dark' : 'light');
   };
 
   return (
@@ -163,7 +170,7 @@ export default function AdminDashboard() {
               <User className={`h-5 w-5 ${theme === 'dark' ? 'text-[#c9a55a]' : 'text-[#001f3f]'}`} />
               <span className={`text-sm font-medium ${theme === 'dark' ? 'text-white' : 'text-[#001f3f]'}`}>Admin </span>
             </div>
-            <Button 
+            <Button  onClick={handleLogout}
               variant="ghost" 
               size="sm" 
               className={`${theme === 'dark' ? 'text-[#c9a55a] hover:text-white hover:bg-[#c9a55a]' : 'text-[#001f3f] hover:text-[#c9a55a] hover:bg-gray-200'}`}
@@ -177,78 +184,95 @@ export default function AdminDashboard() {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
         <div className="flex justify-between">
-          <Button size="lg" className={`${theme === 'dark' ? 'bg-[#c9a55a] text-[#001f3f] hover:bg-[#d9b56a]' : 'bg-[#001f3f] text-white hover:bg-[#002a4f]'}`} onClick={() => setIsPartnerModalOpen(true)}>
-            <PlusCircle className="mr-2 h-5 w-5" />
-            Add Partner
-          </Button>
-          <Button size="lg" className={`${theme === 'dark' ? 'bg-[#c9a55a] text-[#001f3f] hover:bg-[#d9b56a]' : 'bg-[#001f3f] text-white hover:bg-[#002a4f]'}`}>
-            View All Partners
-          </Button>
+         <Button
+  size="lg"
+  className={`${
+    theme === 'light'
+      ? 'bg-[#006bb6] text-white hover:bg-[#005a93] border border-[#c9a55a] hover:border-[#d9b56a]'
+      : 'bg-[#001f3f] text-white hover:bg-[#002a4f] border border-gray-300 hover:border-[#003c68]'
+  } flex items-center justify-center px-6 py-3 rounded-lg shadow-md transition duration-200 ease-in-out`}
+  onClick={() => setIsPartnerModalOpen(true)}
+>
+  <PlusCircle className="mr-2 h-5 w-5" />
+  Add Partner
+</Button>
+
+
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-8">
-          <Card className={`${theme === 'dark' ? 'bg-[#002a4f] border-[#c9a55a]' : 'bg-white border-gray-200'}`}>
-            <CardHeader>
-              <CardTitle className={theme === 'dark' ? 'text-[#c9a55a]' : 'text-[#001f3f]'}>Partner Selection</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-2 flex flex-col">
-                <Label htmlFor="customer" className={theme === 'dark' ? 'text-white' : 'text-[#001f3f]'}>Select Customer</Label>
-                <Popover open={open} onOpenChange={setOpen}>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      role="combobox"
-                      aria-expanded={open}
-                      className={`${theme === 'dark' ? 'justify-between bg-[#001f3f] text-white border-[#c9a55a] hover:bg-[#002a4f]' : 'justify-between bg-white text-[#001f3f] border-gray-300 hover:bg-gray-100'}`}
-                    >
-                      {selectedCustomer
-                        ? customers.find(
-                            (customer: any) => customer.value === selectedCustomer
-                          )?.label
-                        : "Select customer..."}
-                      <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className={`${theme === 'dark' ? 'bg-[#002a4f] text-white border-[#c9a55a] p-0' : 'bg-white text-[#001f3f] border-gray-300 p-0'}`}>
-                    <Command className="bg-transparent">
-                      <CommandInput placeholder="Search customer..." className={theme === 'dark' ? 'text-white' : 'text-[#001f3f]'} />
-                      <CommandList>
-                        <CommandEmpty>No customer found.</CommandEmpty>
-                        <CommandGroup>
-                          {customers.map((customer: any) => (
-                            <CommandItem
-                              key={customer.value}
-                              value={customer.value}
-                              onSelect={(currentValue) => {
-                                setSelectedCustomer(
-                                  currentValue === selectedCustomer
-                                    ? ""
-                                    : currentValue
-                                );
-                                setOpen(false);
-                              }}
-                              className={`${theme === 'dark' ? 'text-white hover:bg-[#001f3f]' : 'text-[#001f3f] hover:bg-gray-100'}`}
-                            >
-                              <Check
-                                className={cn(
-                                  "mr-2 h-4 w-4",
-                                  selectedCustomer === customer.value
-                                    ? "opacity-100"
-                                    : "opacity-0"
-                                )}
-                              />
-                              {customer.label}
-                            </CommandItem>
-                          ))}
-                        </CommandGroup>
-                      </CommandList>
-                    </Command>
-                  </PopoverContent>
-                </Popover>
-              </div>
-            </CardContent>
-          </Card>
+         <Card className={`${theme === 'dark' ? 'bg-[#002a4f] border-[#c9a55a]' : 'bg-white border-gray-200'}`}>
+  <CardHeader>
+    <CardTitle className={theme === 'dark' ? 'text-[#c9a55a]' : 'text-[#001f3f]'}>Partner Selection</CardTitle>
+  </CardHeader>
+  <CardContent>
+    <div className="space-y-2 flex flex-col">
+      <Label htmlFor="customer" className={theme === 'dark' ? 'text-[#c9a55a]' : 'text-[#001f3f]'}>Select Customer</Label>
+      
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>
+          <Button
+            variant="outline"
+            role="combobox"
+            aria-expanded={open}
+            className={`${
+              theme === 'dark'
+                ? 'justify-between bg-[#002a4f] text-[#c9a55a] border-[#c9a55a] hover:bg-[#003c68]'
+                : 'justify-between bg-white text-[#001f3f] border-gray-300 hover:bg-blue-50'
+            }`}
+          >
+            {selectedCustomer
+              ? customers.find((customer: any) => customer.value === selectedCustomer)?.label
+              : "Select customer..."}
+            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          </Button>
+        </PopoverTrigger>
+        
+        <PopoverContent className={`${
+          theme === 'dark'
+            ? 'bg-[#003c68] text-[#c9a55a] border-[#c9a55a] p-0'
+            : 'bg-white text-[#001f3f] border-gray-300 p-0'
+        }`}>
+          <Command className="bg-transparent">
+            <CommandInput
+              placeholder="Search customer..."
+              className={`${theme === 'dark' ? 'text-[#c9a55a] placeholder-[#c9a55a]' : 'text-[#001f3f] placeholder-gray-500'}`}
+            />
+            <CommandList>
+              <CommandEmpty>No customer found.</CommandEmpty>
+              <CommandGroup>
+                {customers.map((customer: any) => (
+                  <CommandItem
+                    key={customer.value}
+                    value={customer.value}
+                    onSelect={(currentValue) => {
+                      setSelectedCustomer(currentValue === selectedCustomer ? "" : currentValue);
+                      setOpen(false);
+                    }}
+                    className={`${
+                      theme === 'dark'
+                        ? 'text-[#c9a55a] hover:bg-[#002a4f]'
+                        : 'text-[#001f3f] hover:bg-blue-50'
+                    }`}
+                  >
+                    <Check
+                      className={cn(
+                        "mr-2 h-4 w-4",
+                        selectedCustomer === customer.value ? "opacity-100" : "opacity-0"
+                      )}
+                    />
+                    {customer.label}
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            </CommandList>
+          </Command>
+        </PopoverContent>
+      </Popover>
+    </div>
+  </CardContent>
+</Card>
+
 
           <Card className={`${theme === 'dark' ? 'bg-[#002a4f] border-[#c9a55a]' : 'bg-white border-gray-200'}`}>
             <CardHeader>
@@ -270,7 +294,7 @@ export default function AdminDashboard() {
                 />
               </div>
               <div>
-                <Label htmlFor="portfolio1Capital" className={theme === 'dark' ? 'text-white' : 'text-[#001f3f]'}>Portfolio 1 Capital</Label>
+                <Label htmlFor="portfolio1Capital" className={theme === 'dark' ? 'text-white' : 'text-[#001f3f]'}>Mr Kitchen Capital</Label>
                 <Input
                   id="portfolio1Capital"
                   type="number"
@@ -284,12 +308,26 @@ export default function AdminDashboard() {
                 />
               </div>
               <div>
-                <Label htmlFor="portfolio2Capital" className={theme === 'dark' ? 'text-white' : 'text-[#001f3f]'}>Portfolio 2 Capital</Label>
+                <Label htmlFor="portfolio2Capital" className={theme === 'dark' ? 'text-white' : 'text-[#001f3f]'}>Didi Farm Capital</Label>
                 <Input
                   id="portfolio2Capital"
                   type="number"
                   value={capitalInvested.portfolio2}
                   onChange={(e) => setCapitalInvested({ ...capitalInvested, portfolio2: parseFloat(e.target.value) })}
+                  className={`${
+                    theme === 'dark'
+                      ? 'bg-[#001f3f] text-white border-[#c9a55a] focus:ring-[#c9a55a]'
+                      : 'bg-white text-[#001f3f] border-gray-300 focus:ring-[#001f3f]'
+                  }`}
+                />
+              </div>
+               <div>
+                <Label htmlFor="portfolio3Capital" className={theme === 'dark' ? 'text-white' : 'text-[#001f3f]'}>Corebanc Capital</Label>
+                <Input
+                  id="portfolio3Capital"
+                  type="number"
+                  value={capitalInvested.portfolio3}
+                  onChange={(e) => setCapitalInvested({ ...capitalInvested, portfolio3: parseFloat(e.target.value) })}
                   className={`${
                     theme === 'dark'
                       ? 'bg-[#001f3f] text-white border-[#c9a55a] focus:ring-[#c9a55a]'
@@ -320,7 +358,7 @@ export default function AdminDashboard() {
                 />
               </div>
               <div>
-                <Label htmlFor="portfolio1Interest" className={theme === 'dark' ? 'text-white' : 'text-[#001f3f]'}>Portfolio 1 Interest</Label>
+                <Label htmlFor="portfolio1Interest" className={theme === 'dark' ? 'text-white' : 'text-[#001f3f]'}>Mr Kitchen Interest</Label>
                 <Input
                   id="portfolio1Interest"
                   type="number"
@@ -334,12 +372,26 @@ export default function AdminDashboard() {
                 />
               </div>
               <div>
-                <Label htmlFor="portfolio2Interest" className={theme === 'dark' ? 'text-white' : 'text-[#001f3f]'}>Portfolio 2 Interest</Label>
+                <Label htmlFor="portfolio2Interest" className={theme === 'dark' ? 'text-white' : 'text-[#001f3f]'}>Didi Farm Interest</Label>
                 <Input
                   id="portfolio2Interest"
                   type="number"
                   value={interestAccrued.portfolio2}
                   onChange={(e) => setInterestAccrued({ ...interestAccrued, portfolio2: parseFloat(e.target.value) })}
+                  className={`${
+                    theme === 'dark'
+                      ? 'bg-[#001f3f] text-white border-[#c9a55a] focus:ring-[#c9a55a]'
+                      : 'bg-white text-[#001f3f] border-gray-300 focus:ring-[#001f3f]'
+                  }`}
+                />
+              </div>
+               <div>
+                <Label htmlFor="portfolio2Interest" className={theme === 'dark' ? 'text-white' : 'text-[#001f3f]'}>Corebanc Interest</Label>
+                <Input
+                  id="portfolio3Interest"
+                  type="number"
+                  value={interestAccrued.portfolio3}
+                  onChange={(e) => setInterestAccrued({ ...interestAccrued, portfolio3: parseFloat(e.target.value) })}
                   className={`${
                     theme === 'dark'
                       ? 'bg-[#001f3f] text-white border-[#c9a55a] focus:ring-[#c9a55a]'
@@ -357,7 +409,7 @@ export default function AdminDashboard() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <Label htmlFor="portfolio1Equity" className={theme === 'dark' ? 'text-white' : 'text-[#001f3f]'}>Portfolio 1 Equity (%)</Label>
+                <Label htmlFor="portfolio1Equity" className={theme === 'dark' ? 'text-white' : 'text-[#001f3f]'}>Mr Kitchen Equity (%)</Label>
                 <Input
                   id="portfolio1Equity"
                   type="number"
@@ -371,12 +423,26 @@ export default function AdminDashboard() {
                 />
               </div>
               <div>
-                <Label htmlFor="portfolio2Equity" className={theme === 'dark' ? 'text-white' : 'text-[#001f3f]'}>Portfolio 2 Equity (%)</Label>
+                <Label htmlFor="portfolio2Equity" className={theme === 'dark' ? 'text-white' : 'text-[#001f3f]'}>Didi Farm Equity (%)</Label>
                 <Input
                   id="portfolio2Equity"
                   type="number"
                   value={equity.portfolio2}
                   onChange={(e) => setEquity({ ...equity, portfolio2: parseFloat(e.target.value) })}
+                  className={`${
+                    theme === 'dark'
+                      ? 'bg-[#001f3f] text-white border-[#c9a55a] focus:ring-[#c9a55a]'
+                      : 'bg-white text-[#001f3f] border-gray-300 focus:ring-[#001f3f]'
+                  }`}
+                />
+              </div>
+               <div>
+                <Label htmlFor="portfolio2Equity" className={theme === 'dark' ? 'text-white' : 'text-[#001f3f]'}>Corebanc Equity (%)</Label>
+                <Input
+                  id="portfolio3Equity"
+                  type="number"
+                  value={equity.portfolio3}
+                  onChange={(e) => setEquity({ ...equity, portfolio3: parseFloat(e.target.value) })}
                   className={`${
                     theme === 'dark'
                       ? 'bg-[#001f3f] text-white border-[#c9a55a] focus:ring-[#c9a55a]'
@@ -432,13 +498,13 @@ export default function AdminDashboard() {
               <CardTitle className={theme === 'dark' ? 'text-[#c9a55a]' : 'text-[#001f3f]'}>Summary</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="space-y-2">
+              {/* <div className="space-y-2">
                 <p className={theme === 'dark' ? 'text-white' : 'text-[#001f3f]'}><strong>Total Capital Invested:</strong> ${capitalInvested.total}</p>
                 <p className={theme === 'dark' ? 'text-white' : 'text-[#001f3f]'}><strong>Total Interest Accrued:</strong> ${interestAccrued.total}</p>
                 <p className={theme === 'dark' ? 'text-white' : 'text-[#001f3f]'}><strong>Portfolio 1 Equity:</strong> {equity.portfolio1}%</p>
                 <p className={theme === 'dark' ? 'text-white' : 'text-[#001f3f]'}><strong>Portfolio 2 Equity:</strong> {equity.portfolio2}%</p>
                 <p className={theme === 'dark' ? 'text-white' : 'text-[#001f3f]'}><strong>Uploaded Report:</strong> {uploadedFile ? 'File uploaded' : 'No file uploaded'}</p>
-              </div>
+              </div> */}
             </CardContent>
           </Card>
 

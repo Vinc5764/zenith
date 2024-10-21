@@ -56,7 +56,7 @@ export default function ServicesPage() {
   ]
 
   return (
-    <section className="py-16 px-4 md:px-6 lg:px-8 bg-gradient-to-b from-white to-gray-50">
+    <section className=" mt-6 px-4 md:px-6 lg:px-8 bg-gradient-to-b from-white to-gray-50">
       <div className="container mx-auto">
         <h1 className="text-4xl md:text-5xl font-bold text-center text-gray-900 mb-4">Our Services</h1>
         <p className="text-xl text-center text-gray-600 mb-12 max-w-2xl mx-auto">
@@ -65,7 +65,7 @@ export default function ServicesPage() {
         
         <div className="mb-16 text-center bg-amber-100 rounded-lg p-8 shadow-inner">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">Assets Under Management</h2>
-          <p className="text-5xl font-bold text-amber-600">$2,700,000</p>
+          <p className="text-5xl font-bold text-amber-600">Ghs 3,400,000</p>
         </div>
 
         <Tabs defaultValue={services[0].title} className="w-full">

@@ -2,7 +2,7 @@
 
 import mongoose from "mongoose";
 
-const MONGODB_URL = "mongodb+srv://simonadjei70:fEAzRvC46lfg3rVx@focus.kv1prmo.mongodb.net/?retryWrites=true&w=majority&appName=focus";
+const MONGODB_URL = "mongodb+srv://simonadjei70:ZHGEos0zxxZVNcBJ@cluster0.zjh2f.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 console.log(MONGODB_URL);
 
 

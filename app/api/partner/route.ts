@@ -24,24 +24,27 @@ export const POST = async (req: any) => {
       return NextResponse.json({ message: "Partner not found" });
     }
 
-    // Update capital invested (total, portfolio1, portfolio2)
+    // Update capital invested (total, portfolio1, portfolio2, portfolio3)
     if (capitalInvested) {
       partner.capitalInvested.total = capitalInvested.total;
       partner.capitalInvested.portfolio1 = capitalInvested.portfolio1 || partner.capitalInvested.portfolio1;
       partner.capitalInvested.portfolio2 = capitalInvested.portfolio2 || partner.capitalInvested.portfolio2;
+      partner.capitalInvested.portfolio3 = capitalInvested.portfolio3 || partner.capitalInvested.portfolio3;
     }
 
-    // Update interest accrued (total, portfolio1, portfolio2)
+    // Update interest accrued (total, portfolio1, portfolio2, portfolio3)
     if (interestAccrued) {
       partner.interestAccrued.total = interestAccrued.total || partner.interestAccrued.total;
       partner.interestAccrued.portfolio1 = interestAccrued.portfolio1 || partner.interestAccrued.portfolio1;
       partner.interestAccrued.portfolio2 = interestAccrued.portfolio2 || partner.interestAccrued.portfolio2;
+      partner.interestAccrued.portfolio3 = interestAccrued.portfolio3 || partner.interestAccrued.portfolio3;
     }
 
-    // Update equity (portfolio1, portfolio2)
+    // Update equity (portfolio1, portfolio2, portfolio3)
     if (equity) {
       partner.equity.portfolio1 = equity.portfolio1 || partner.equity.portfolio1;
       partner.equity.portfolio2 = equity.portfolio2 || partner.equity.portfolio2;
+      partner.equity.portfolio3 = equity.portfolio3 || partner.equity.portfolio3;
     }
 
     // Handle multiple uploaded files and update the uploadedReport array
@@ -51,11 +54,16 @@ export const POST = async (req: any) => {
         const fullFileName = urlParts[urlParts.length - 1];
         const fileName = fullFileName.split("_")[0]; // Extract the name
 
-        // Push each file entry into the uploadedReport array
-        partner.uploadedReport.push({
-          fileName: fileName,
-          filePath: fileUrl,
-        });
+        // Ensure fileName and filePath are not empty or invalid
+        if (fileName && fileUrl) {
+          // Push each file entry into the uploadedReport array
+          partner.uploadedReport.push({
+            fileName,
+            filePath: fileUrl,
+          });
+        } else {
+          console.log("Invalid file name or URL", fileName, fileUrl);
+        }
       });
     }
 
