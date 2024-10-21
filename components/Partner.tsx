@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 import { useEffect, useState } from 'react'
-import { Download, LogOut, User, Sun, Moon } from 'lucide-react'
+import { LogOut, User, Sun, Moon } from 'lucide-react'
 import { FileText } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -17,7 +17,7 @@ export default function PartnerDashboard() {
   const [withdrawalAmount, setWithdrawalAmount] = useState('')
   const [withdrawalPortfolio, setWithdrawalPortfolio] = useState('')
   const [withdrawalReason, setWithdrawalReason] = useState('')
-  const { userType, datas, setUserType,clearToken, setNames }: any = useTokenStore();
+  const {  datas,clearToken }: any = useTokenStore();
   const [selectedPdf, setSelectedPdf] = useState<string | null>(null)
 
    const [depositAmount, setDepositAmount] = useState("");
@@ -54,7 +54,7 @@ export default function PartnerDashboard() {
         throw new Error("Failed to submit withdrawal request.");
       }
 
-      const result = await response.json();
+       await response.json();
       setSuccess("Withdrawal request submitted successfully!");
     } catch (err: any) {
       setError(err.message || "An error occurred.");
@@ -65,11 +65,11 @@ export default function PartnerDashboard() {
 
 const router = useRouter();
   const [theme, setTheme] = useState('light');
- const [portfolio, setPortfolio] = useState<any>([
-    { id: 1, label: "Portfolio PDF 1", pdfUrl: "/pdfs/portfolio1.pdf" },
-    { id: 2, label: "Portfolio PDF 2", pdfUrl: "/pdfs/portfolio2.pdf" },
-    { id: 3, label: "Portfolio PDF 3", pdfUrl: "/pdfs/portfolio3.pdf" },
- ])
+//  const [portfolio, setPortfolio] = useState<any>([
+//     { id: 1, label: "Portfolio PDF 1", pdfUrl: "/pdfs/portfolio1.pdf" },
+//     { id: 2, label: "Portfolio PDF 2", pdfUrl: "/pdfs/portfolio2.pdf" },
+//     { id: 3, label: "Portfolio PDF 3", pdfUrl: "/pdfs/portfolio3.pdf" },
+//  ])
   
     const handleLogout = () => {
     clearToken();

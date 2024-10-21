@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 import { useEffect, useState } from 'react';
-import { Bell, LogOut, Upload, User, PlusCircle, CheckCircle, Sun, Moon } from 'lucide-react';
+import {  LogOut, Upload, User, PlusCircle, CheckCircle, Sun, Moon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -29,7 +29,7 @@ import useTokenStore from '@/lib/store';
 
 export default function AdminDashboard() {
   // const [selectedPartner, setSelectedPartner] = useState('');
-  const { userType, datas, setUserType, clearToken, setNames }: any = useTokenStore();
+  const {  clearToken }: any = useTokenStore();
   const router = useRouter();
   const [capitalInvested, setCapitalInvested] = useState({ total: 0, portfolio1: 0, portfolio2: 0,portfolio3: 0  });
   const [interestAccrued, setInterestAccrued] = useState({ total: 0, portfolio1: 0, portfolio2: 0,portfolio3: 0  });

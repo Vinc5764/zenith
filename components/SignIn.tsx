@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
+
 import { Mail, Lock } from 'lucide-react';
 import useTokenStore from '@/lib/store';
 import { useRouter } from 'next/navigation';
@@ -15,7 +15,7 @@ export default function SignIn() {
 
   const r = useRouter();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e:any) => {
     e.preventDefault();
 
     if (!email || !password) {
