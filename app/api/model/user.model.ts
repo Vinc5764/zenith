@@ -67,11 +67,11 @@ const UserrSchema = new Schema(
       {
         fileName: {
           type: String,
-          required: true,
+         
         },
         filePath: {
           type: String,
-          required: true,
+          
         },
       },
     ],
@@ -79,5 +79,5 @@ const UserrSchema = new Schema(
   { timestamps: true }
 );
 
-const User = models.Users || model("Users", UserrSchema);
+const User = models.Userr || model("Userr", UserrSchema);
 export default User;

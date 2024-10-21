@@ -52,9 +52,9 @@ export default function Component() {
                 </div>
               ))}
             </div>
-            <Button className="w-full mt-8 bg-[#0a2d4d] text-white hover:bg-[#0a2d4d]/90">
+            {/* <Button className="w-full mt-8 bg-[#0a2d4d] text-white hover:bg-[#0a2d4d]/90">
               Learn More <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
+            </Button> */}
           </div>
         </div>
       </div>

@@ -27,7 +27,7 @@ export default function Footer() {
   }, [])
 
   return (
-    <footer className="bg-[#0a2d4d] text-white py-12" data-aos='fade-up'>
+    <footer className="bg-[#0a2d4d] mt-5 text-white py-12" data-aos='fade-up'>
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <div className={`space-y-6 ${animate ? 'animate-fade-right' : 'opacity-0'}`}>
@@ -63,7 +63,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-12 pt-8 border-t border-gray-700 flex flex-col md:flex-row justify-between items-center text-sm">
-          <p>© 2024 Company Name. All rights reserved.</p>
+          <p>© 2024 KAN Assets Management. All rights reserved.</p>
           <div className="flex space-x-4 mt-4 md:mt-0">
             <a href="#" className="hover:text-amber-600 transition-colors">Privacy Policy</a>
             <a href="#" className="hover:text-amber-600 transition-colors">Terms of Service</a>

@@ -1,7 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card"
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowRight } from "lucide-react"
+
 
 // Import service images
 import consultingImage from '@/public/prosper.jpg'
@@ -67,9 +67,9 @@ export default function Component() {
                     </h3>
                     <p className="text-gray-600 mb-4">{service.description}</p>
                   </div>
-                  <div className="flex items-center text-amber-600 font-semibold mt-auto">
+                  {/* <div className="flex items-center text-amber-600 font-semibold mt-auto">
                     Learn More <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-2 transition-transform duration-300" />
-                  </div>
+                  </div> */}
                 </CardContent>
               </Card>
             </Link>
