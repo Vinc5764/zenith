@@ -26,8 +26,10 @@ export default function FinancialServicesPage() {
           ))}
         </nav>
         <div className="flex items-center space-x-4">
-          <HamburgerMenu links={navLinks} />
+          <Link href={`/sign-in`}>
           <Button variant="outline" className="text-[#0033A1] border-[#0033A1] hover:bg-[#0033A1] hover:text-white">Login</Button>
+          </Link>
+          <HamburgerMenu links={navLinks} />
         </div>
       </header>
       <main className="flex-grow">
@@ -42,7 +44,7 @@ export default function FinancialServicesPage() {
             />
           </div>
           <h1 className="text-4xl font-bold mb-4 text-[#0033A1]">Assets Under Management</h1>
-          <p className="text-6xl font-bold text-[#0033A1]">$2,700,000</p>
+          <p className="text-6xl font-bold text-[#0033A1]">GHS 3,400,000</p>
         </section>
       </main>
     </div>

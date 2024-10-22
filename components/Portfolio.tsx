@@ -5,7 +5,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { ExternalLink } from "lucide-react"
 import logo from '@/public/kan-Photoroom.png'
-
+import HamburgerMenu from "@/components/HamburgerMenu"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import {
@@ -14,6 +14,9 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
+import profile from '@/public/profile.jpg'
+import profile1 from '@/public/profile1.jpg'
+import profile2 from '@/public/profile2.jpg'
 
 
 const navLinks = [
@@ -27,7 +30,7 @@ const portfolios = [
   {
     name: "Gracefields",
     sector: "Agriculture",
-    logo: "/placeholder.svg",
+    logo: profile,
     companies: [
       { name: "Gidi farms", url: "https://www.gidifarms.com" }
     ]
@@ -35,7 +38,7 @@ const portfolios = [
   {
     name: "Cornerstone",
     sector: "Industry & Manufacturing",
-    logo: "/placeholder.svg",
+    logo: profile1,
     companies: [
       { name: "mrkitchen", url: "https://www.mrkitchen.com" }
     ]
@@ -43,7 +46,7 @@ const portfolios = [
   {
     name: "Midstack",
     sector: "Finance",
-    logo: "/placeholder.svg",
+    logo: profile2,
     companies: [
       { name: "corebanc", url: "https://www.corebanc.com" }
     ]
@@ -72,9 +75,12 @@ export default function PortfolioManagementPage() {
             </Link>
           ))}
         </nav>
-        <Button variant="outline" className="text-[#0033A1] border-[#0033A1] hover:bg-[#0033A1] hover:text-white">
-          Login
-        </Button>
+        <div className="flex items-center space-x-4">
+          <Link href={`/sign-in`}>
+          <Button variant="outline" className="text-[#0033A1] border-[#0033A1] hover:bg-[#0033A1] hover:text-white">Login</Button>
+          </Link>
+          <HamburgerMenu links={navLinks} />
+        </div>
       </header>
       <main className="flex-grow">
         <section className="container mx-auto px-4 py-16 text-center">

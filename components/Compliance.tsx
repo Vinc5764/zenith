@@ -4,11 +4,16 @@ import { ExternalLink } from "lucide-react"
 import logo from '@/public/kan-Photoroom.png'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
+import HamburgerMenu from "@/components/HamburgerMenu"
+import profile from '@/public/logo.jpg'
+import profile1 from '@/public/logoface.jpg'
+import profile2 from '@/public/jason.jpg'
+
 
 const companies = [
-  { name: "Compliance Firm A", logo: "/placeholder.svg", url: "https://www.compliancefirma.com" },
-  { name: "Compliance Firm B", logo: "/placeholder.svg", url: "https://www.compliancefirmb.com" },
-  { name: "Compliance Firm C", logo: "/placeholder.svg", url: "https://www.compliancefirmc.com" },
+  { name: "Compliance Firm A", logo: profile, url: "https://www.compliancefirma.com" },
+  { name: "Compliance Firm B", logo: profile1, url: "https://www.compliancefirmb.com" },
+  { name: "Compliance Firm C", logo: profile2, url: "https://www.compliancefirmc.com" },
 ]
 const navLinks = [
   { href: "/management", label: "Management Consulting" },
@@ -31,9 +36,12 @@ export default function CompliancePage() {
             </Link>
           ))}
         </nav>
-        <Button variant="outline" className="text-[#0033A1] border-[#0033A1] hover:bg-[#0033A1] hover:text-white">
-          Login
-        </Button>
+        <div className="flex items-center space-x-4">
+          <Link href={`/sign-in`}>
+          <Button variant="outline" className="text-[#0033A1] border-[#0033A1] hover:bg-[#0033A1] hover:text-white">Login</Button>
+          </Link>
+          <HamburgerMenu links={navLinks} />
+        </div>
       </header>
       <main className="flex-grow">
         <section className="container mx-auto px-4 py-16 text-center">
