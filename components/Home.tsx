@@ -3,6 +3,7 @@ import Link from "next/link"
 import logo from '@/public/kan-Photoroom.png'
 import { Button } from "@/components/ui/button"
 import HamburgerMenu from "@/components/HamburgerMenu"
+import profile from '@/public/corporate.jpg'
 
 const navLinks = [
   { href: "/management", label: "Management Consulting" },
@@ -36,7 +37,7 @@ export default function FinancialServicesPage() {
         <section className="container mx-auto px-4 py-16 text-center">
           <div className="mb-8">
             <Image
-              src="/placeholder.svg"
+              src={profile}
               alt="Financial Services"
               width={400}
               height={300}
