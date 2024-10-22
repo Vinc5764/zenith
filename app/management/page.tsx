@@ -1,10 +1,12 @@
+import Footer from '@/components/Footer'
 import ManagementConsultingPage from '@/components/Management'
 import React from 'react'
 
 const page = () => {
   return (
     <div>
-      <ManagementConsultingPage/>
+      <ManagementConsultingPage />
+      <Footer/>
     </div>
   )
 }

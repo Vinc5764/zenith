@@ -1,10 +1,12 @@
 import CompliancePage from '@/components/Compliance'
+import Footer from '@/components/Footer'
 import React from 'react'
 
 const page = () => {
   return (
       <div>
-          <CompliancePage />
+      <CompliancePage />
+      <Footer/>
     </div>
   )
 }
