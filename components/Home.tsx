@@ -28,7 +28,7 @@ export default function FinancialServicesPage() {
         </nav>
         <div className="flex items-center space-x-4">
           <Link href={`/sign-in`}>
-          <Button variant="outline" className="text-[#0033A1] border-[#0033A1] hover:bg-[#0033A1] hover:text-white">Login</Button>
+            <Button variant="outline" className="text-[#0033A1] border-[#0033A1] hover:bg-[#0033A1] hover:text-white">Login</Button>
           </Link>
           <HamburgerMenu links={navLinks} />
         </div>
@@ -44,8 +44,13 @@ export default function FinancialServicesPage() {
               className="mx-auto"
             />
           </div>
-          <h1 className="text-4xl font-bold mb-4 text-[#0033A1]">Assets Under Management</h1>
-          <p className="text-6xl font-bold text-[#0033A1]">GHS 3,400,000</p>
+          <div className="bg-gradient-to-r from-[#f45846] to-[#0066FF] text-transparent bg-clip-text">
+            <h1 className="text-4xl font-bold mb-4">Assets Under Management</h1>
+            <p className="text-4xl md:text-6xl font-bold flex justify-center items-center">
+              <span className="text-2xl md:text-4xl mr-2">GHS</span>
+              <span>3,400,000</span>
+            </p>
+          </div>
         </section>
       </main>
     </div>
