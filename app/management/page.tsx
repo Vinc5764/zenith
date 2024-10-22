@@ -1,12 +1,10 @@
-import FinancialServicesPage from '@/components/Home'
+import ManagementConsultingPage from '@/components/Management'
 import React from 'react'
 
-
-  
 const page = () => {
   return (
     <div>
-      <FinancialServicesPage />
+      <ManagementConsultingPage/>
     </div>
   )
 }
