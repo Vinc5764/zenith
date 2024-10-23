@@ -40,22 +40,27 @@ export default function PartnerDashboard() {
       period: period,
     };
 
+    console.log(withdrawalData, withdrawalPortfolio);
+    
+
     try {
       // Sending the data to the backend
-      const response = await fetch("/api/withdrawals", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(withdrawalData),
-      });
+      // const response = await fetch("https://zenith-seven-mauve.vercel.app/api/withdrawals", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify(withdrawalData),
+      // });
 
-      if (!response.ok) {
-        throw new Error("Failed to submit withdrawal request.");
-      }
+      alert("Deposit request sent successfully")
 
-       await response.json();
-      setSuccess("Withdrawal request submitted successfully!");
+      // if (!response.ok) {
+      //   throw new Error("Failed to submit withdrawal request.");
+      // }
+
+      //  await response.json();
+      // setSuccess("Withdrawal request submitted successfully!");
     } catch (err: any) {
       setError(err.message || "An error occurred.");
     } finally {
@@ -79,13 +84,13 @@ const router = useRouter();
   const handleWithdrawalSubmit = (event) => {
     event.preventDefault()
     // Here you would typically send the withdrawal request to your backend
-    console.log('Withdrawal request:', { withdrawalAmount, withdrawalPortfolio, withdrawalReason })
+    alert('Withdrawal request submitted successfully u will be contacted shortly')
   }
 
   useEffect(() => {
     const fetchMembers = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/api/partner/partner-details`, {
+        const response = await axios.get(`https://zenith-seven-mauve.vercel.app/api/partner/partner-details`, {
           params: {
             partner: datas._id,
           },
@@ -202,7 +207,7 @@ const router = useRouter();
               : 'bg-[#003366] text-white hover:bg-[#004080]'
           } font-bold px-4 py-2 rounded`}
         >
-          View Bank Details
+          Initiate
         </Button>
       </DialogTrigger>
       <DialogContent

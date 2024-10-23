@@ -96,7 +96,7 @@ export default function AdminDashboard() {
   useEffect(() => {
     async function fetchCustomers() {
       try {
-        const response = await axios.get(`http://localhost:3001/api/partner`);
+        const response = await axios.get(`https://zenith-seven-mauve.vercel.app/api/partner`);
         setCustomers(
           response.data.map((customer: any) => ({
             value: customer._id,
@@ -114,7 +114,7 @@ export default function AdminDashboard() {
     e.preventDefault();
     if (partnerDetails.name && partnerDetails.email && partnerDetails.contact && partnerDetails.password) {
       try {
-        const response = await fetch('http://localhost:3001/api/register', {
+        const response = await fetch('https://zenith-seven-mauve.vercel.app/api/register', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
