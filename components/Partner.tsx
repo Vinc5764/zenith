@@ -40,7 +40,7 @@ export default function PartnerDashboard() {
       period: period,
     };
 
-    console.log(withdrawalData);
+    console.log(withdrawalData, withdrawalPortfolio);
     
 
     try {
