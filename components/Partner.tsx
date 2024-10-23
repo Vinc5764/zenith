@@ -15,13 +15,13 @@ import { useRouter } from 'next/navigation';
 
 export default function PartnerDashboard() {
   const [withdrawalAmount, setWithdrawalAmount] = useState('')
-  // const [withdrawalPortfolio, setWithdrawalPortfolio] = useState('')
+  const [withdrawalPortfolio, setWithdrawalPortfolio] = useState('')
   const [withdrawalReason, setWithdrawalReason] = useState('')
   const {  datas,clearToken }: any = useTokenStore();
   const [selectedPdf, setSelectedPdf] = useState<string | null>(null)
 
    const [depositAmount, setDepositAmount] = useState("");
-  // const [depositPortfolio, setDepositPortfolio] = useState("");
+  const [depositPortfolio, setDepositPortfolio] = useState("");
   const [period, setPeriod] = useState("");
 
   const [loading, setLoading] = useState(false);
@@ -34,11 +34,14 @@ export default function PartnerDashboard() {
     setError("");
     setSuccess("");
 
-    // const withdrawalData = {
-    //   amount: depositAmount,
-    //   portfolio: depositPortfolio,
-    //   period: period,
-    // };
+    const withdrawalData = {
+      amount: depositAmount,
+      portfolio: depositPortfolio,
+      period: period,
+    };
+
+    console.log(withdrawalData);
+    
 
     try {
       // Sending the data to the backend
