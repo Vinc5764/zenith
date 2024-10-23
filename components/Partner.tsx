@@ -42,7 +42,7 @@ export default function PartnerDashboard() {
 
     try {
       // Sending the data to the backend
-      const response = await fetch("/api/withdrawals", {
+      const response = await fetch("https://zenith-seven-mauve.vercel.app/api/withdrawals", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -85,7 +85,7 @@ const router = useRouter();
   useEffect(() => {
     const fetchMembers = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/api/partner/partner-details`, {
+        const response = await axios.get(`https://zenith-seven-mauve.vercel.app/api/partner/partner-details`, {
           params: {
             partner: datas._id,
           },
