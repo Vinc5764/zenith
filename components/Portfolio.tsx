@@ -14,7 +14,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import profile from '@/public/profile.jpg'
+import profile from '@/public/gracefields.jpg'
 import profile1 from '@/public/profile1.jpg'
 import profile2 from '@/public/profile2.jpg'
 
