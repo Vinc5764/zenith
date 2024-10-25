@@ -4,7 +4,7 @@ import logo from '@/public/kan-logo-2-removebg-preview.png'
 import { Button } from "@/components/ui/button"
 import HamburgerMenu from "@/components/HamburgerMenu"
 import profile from '@/public/page1.jpg'
-import hero from '@/public/hero-sec.jpg'
+
 
 const navLinks = [
   { href: "/management", label: "Management Consulting" },
