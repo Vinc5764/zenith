@@ -29,7 +29,7 @@ export default function FinancialServicesPage() {
         </nav>
         <div className="flex items-center space-x-4">
           <Link href={`/sign-in`}>
-            <Button variant="outline" className="text-[#8aa8e8] border-[#818cfe] hover:bg-[#0033A1] hover:text-white">Login</Button>
+            <Button variant="outline" className="text-[#8aa8e8] border-[#8aa8e8] hover:bg-[#0033A1] hover:text-white">Login</Button>
           </Link>
           <HamburgerMenu links={navLinks} />
         </div>
