@@ -54,12 +54,12 @@ export default function FinancialServicesPage() {
               className=""
             />
           </div>
-          <div className="bg-gradient-to-r from-[#8ae8e4] to-[#93bdfa] text-transparent bg-clip-text">
-            <h1 className="text-xl font-bold mb-4">Assets Under Management</h1>
-            <p className="text-5xl md:text-6xl font-bold flex justify-center items-center">
+          <div className="bg-gradient-to-r  mt-[15%] from-[#8ae8e4] to-[#93bdfa] text-transparent bg-clip-text">
+            <h1 className="text-lg font-bold mb-4">Assets Under Management Ghs 3.4mil</h1>
+            {/* <p className="text-5xl md:text-6xl font-bold flex justify-center items-center">
               <span className="text-2xl md:text-4xl mr-2">GHS</span>
               <span>3,400,000</span>
-            </p>
+            </p> */}
           </div>
         </section>
       </main>
