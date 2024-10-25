@@ -3,8 +3,8 @@ import Link from "next/link"
 import logo from '@/public/kan-logo-2-removebg-preview.png'
 import { Button } from "@/components/ui/button"
 import HamburgerMenu from "@/components/HamburgerMenu"
-import profile from '@/public/great-removebg-preview.png'
-import hero from '@/public/hero-sec.jpg'
+import profile from '@/public/page1.jpg'
+
 
 const navLinks = [
   { href: "/management", label: "Management Consulting" },
@@ -29,13 +29,13 @@ export default function FinancialServicesPage() {
         </nav>
         <div className="flex items-center space-x-4">
           <Link href={`/sign-in`}>
-            <Button variant="outline" className="text-[#8aa8e8] border-[#8aa8e8] hover:bg-[#0033A1] hover:text-white">Login</Button>
+            <Button variant="outline" className="text-blue-400 border-blue-400 hover:bg-[#0033A1] hover:text-white">Login</Button>
           </Link>
           <HamburgerMenu links={navLinks} />
         </div>
       </header>
-      <main className="flex-grow bg-blue-50">
-        <section className="container bg-blue-50   py-16 text-center">
+      <main className="flex-grow ">
+        <section className="container bg-blue-50    text-center">
           <div className="mb-8">
             <Image
               src={profile}
@@ -45,7 +45,7 @@ export default function FinancialServicesPage() {
               className=""
             />
           </div>
-           <div className="mb-8">
+           {/* <div className="mb-8">
             <Image
               src={hero}
               alt="Financial Services"
@@ -53,14 +53,8 @@ export default function FinancialServicesPage() {
               height={300}
               className=""
             />
-          </div>
-          <div className="bg-gradient-to-r  mt-[15%] from-[#8ae8e4] to-[#93bdfa] text-transparent bg-clip-text">
-            <h1 className="text-lg font-bold mb-4">Assets Under Management Ghs 3.4mil</h1>
-            {/* <p className="text-5xl md:text-6xl font-bold flex justify-center items-center">
-              <span className="text-2xl md:text-4xl mr-2">GHS</span>
-              <span>3,400,000</span>
-            </p> */}
-          </div>
+          </div> */}
+          
         </section>
       </main>
     </div>

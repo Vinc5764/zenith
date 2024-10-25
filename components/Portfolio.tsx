@@ -15,8 +15,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import profile from '@/public/gracefields.jpg'
-import profile1 from '@/public/profile1.jpg'
-import profile2 from '@/public/profile2.jpg'
+import profile1 from '@/public/corner.jpg'
+import profile2 from '@/public/midstack.jpg'
 
 
 const navLinks = [
