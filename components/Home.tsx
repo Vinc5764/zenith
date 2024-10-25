@@ -1,9 +1,10 @@
 import Image from "next/image"
 import Link from "next/link"
-import logo from '@/public/kan-Photoroom.png'
+import logo from '@/public/kan-logo-2-removebg-preview.png'
 import { Button } from "@/components/ui/button"
 import HamburgerMenu from "@/components/HamburgerMenu"
-import profile from '@/public/kan-asset.jpg'
+import profile from '@/public/great-removebg-preview.png'
+import hero from '@/public/hero-sec.jpg'
 
 const navLinks = [
   { href: "/management", label: "Management Consulting" },
@@ -14,7 +15,7 @@ const navLinks = [
 
 export default function FinancialServicesPage() {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen  flex flex-col">
       <header className="flex items-center justify-between px-4 py-4 bg-white shadow-sm">
         <Link href="/" className="flex items-center space-x-2">
           <Image src={logo} alt="Logo" width={100} height={48} />
@@ -28,20 +29,29 @@ export default function FinancialServicesPage() {
         </nav>
         <div className="flex items-center space-x-4">
           <Link href={`/sign-in`}>
-            <Button variant="outline" className="text-[#8ae8e4] border-[#8ae8e4] hover:bg-[#0033A1] hover:text-white">Login</Button>
+            <Button variant="outline" className="text-[#8aa8e8] border-[#818cfe] hover:bg-[#0033A1] hover:text-white">Login</Button>
           </Link>
           <HamburgerMenu links={navLinks} />
         </div>
       </header>
-      <main className="flex-grow">
-        <section className="container bg-blue-50 mx-auto px-4 py-16 text-center">
+      <main className="flex-grow bg-blue-50">
+        <section className="container bg-blue-50   py-16 text-center">
           <div className="mb-8">
             <Image
               src={profile}
               alt="Financial Services"
               width={400}
               height={300}
-              className="mx-auto"
+              className=""
+            />
+          </div>
+           <div className="mb-8">
+            <Image
+              src={hero}
+              alt="Financial Services"
+              width={400}
+              height={300}
+              className=""
             />
           </div>
           <div className="bg-gradient-to-r from-[#8ae8e4] to-[#93bdfa] text-transparent bg-clip-text">
