@@ -45,8 +45,8 @@ export default function CompliancePage() {
       </header>
       <main className="flex-grow">
         <section className="container mx-auto px-4 py-16 text-center">
-          <h1 className="text-4xl font-bold mb-4 text-[#0033A1]">Comprehensive Compliance Solutions</h1>
-          <p className="text-xl mb-8 text-gray-600">Navigating regulatory requirements to keep your business compliant</p>
+          <h1 className="text-4xl font-bold mb-4 text-[#0033A1]">Compliance </h1>
+          <p className="text-xl mb-8 text-gray-600">We are your partner that helps you meet all regulatory and statutory requirements across multiple industries.</p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {companies.map((company) => (
               <Card key={company.name} className="hover:shadow-lg transition-shadow duration-300">

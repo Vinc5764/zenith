@@ -84,8 +84,9 @@ export default function PortfolioManagementPage() {
       </header>
       <main className="flex-grow">
         <section className="container mx-auto px-4 py-16 text-center">
-          <h1 className="text-4xl font-bold mb-4 text-[#0033A1]">Diverse Portfolio Management</h1>
-          <p className="text-xl mb-8 text-gray-600">Strategic investments across various sectors for optimal growth</p>
+          <h1 className="text-4xl font-bold mb-4 text-[#0033A1]">Portfolio Management.
+</h1>
+          <p className="text-xl mb-8 text-gray-600">We believe in taking centre stage in leading  the change we want to see in our society. We accomplish this by applying and managing resources in Agriculture, Finance, Industry and manufacturing .</p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {portfolios.map((portfolio) => (
               <Card key={portfolio.name} className="hover:shadow-lg transition-shadow duration-300">

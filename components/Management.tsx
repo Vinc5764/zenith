@@ -46,7 +46,9 @@ export default function ManagementConsultingPage() {
       </header>
       <main className="flex-grow">
         <section className="container mx-auto px-4 py-16 text-center">
-          <h1 className="text-4xl font-bold mb-8 text-[#0033A1]">Optimize Business Process</h1>
+          <h1 className="text-4xl font-bold mb-8 text-[#0033A1]">Management Consulting</h1>
+           <p className="text-xl mb-8 text-gray-600">We help companies optimize business models to maximum their social impact and bottomlines.</p>
+        
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {companies.map((company) => (
               <Card key={company.name} className="hover:shadow-lg transition-shadow duration-300">
