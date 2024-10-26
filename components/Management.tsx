@@ -1,7 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { ExternalLink } from "lucide-react"
-import logo from '@/public/kan-Photoroom.png'
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import HamburgerMenu from "@/components/HamburgerMenu"
@@ -9,7 +9,7 @@ import profile from '@/public/news.jpg'
 import profile1 from '@/public/news1.jpg'
 import profile2 from '@/public/news2.jpg'
 
-
+import logo from '@/public/kan-logo-2-removebg-preview.png'
 const companies = [
   { name: "Company A", logo:profile, url: "https://www.companya.com" },
   { name: "Company B", logo:profile1, url: "https://www.companyb.com" },

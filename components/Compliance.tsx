@@ -1,14 +1,14 @@
 import Image from "next/image"
 import Link from "next/link"
 import { ExternalLink } from "lucide-react"
-import logo from '@/public/kan-Photoroom.png'
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import HamburgerMenu from "@/components/HamburgerMenu"
 import profile from '@/public/logo.jpg'
 import profile1 from '@/public/logoface.jpg'
 import profile2 from '@/public/jason.jpg'
-
+import logo from '@/public/kan-logo-2-removebg-preview.png'
 
 const companies = [
   { name: "Compliance Firm A", logo: profile, url: "https://www.compliancefirma.com" },

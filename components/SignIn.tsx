@@ -1,10 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-
+import logo from '@/public/kan-logo-2-removebg-preview.png'
 import { Mail, Lock } from 'lucide-react';
 import useTokenStore from '@/lib/store';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 export default function SignIn() {
   const [email, setEmail] = useState('');
@@ -58,8 +59,8 @@ export default function SignIn() {
     <div className="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-blue-50">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="flex justify-center">
-          <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center">
-            <span className="text-white text-2xl font-bold">KAN</span>
+          <div className="  w-[150px] rounded-full flex items-center justify-center">
+            <Image src={logo} alt='logo'/>
           </div>
         </div>
         <h2 className="mt-6 text-center text-3xl font-extrabold text-blue-900">
