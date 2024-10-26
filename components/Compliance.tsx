@@ -6,14 +6,14 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import HamburgerMenu from "@/components/HamburgerMenu"
 import profile from '@/public/logo.jpg'
-import profile1 from '@/public/logoface.jpg'
+import profile1 from '@/public/mrkitchen.jpg'
 import profile2 from '@/public/jason.jpg'
 import logo from '@/public/kan-logo-2-removebg-preview.png'
 
 const companies = [
-  { name: "Compliance Firm A", logo: profile, url: "https://www.compliancefirma.com" },
-  { name: "Compliance Firm B", logo: profile1, url: "https://www.compliancefirmb.com" },
-  { name: "Compliance Firm C", logo: profile2, url: "https://www.compliancefirmc.com" },
+  { name: "Mr Kitchen", logo: profile1, url: "https://www.instagram.com/mrkitchengh?igsh=dnIxMHljcXVqbDdp" },
+  { name: "Compliance Firm B", logo: profile, url: "" },
+  { name: "Compliance Firm C", logo: profile2, url: "" },
 ]
 const navLinks = [
   { href: "/management", label: "Management Consulting" },

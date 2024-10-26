@@ -32,7 +32,7 @@ const portfolios = [
     sector: "Agriculture",
     logo: profile,
     companies: [
-      { name: "Gidi farms", url: "https://www.gidifarms.com" }
+      { name: "Gidi farms", url: "" }
     ]
   },
   {
@@ -40,7 +40,7 @@ const portfolios = [
     sector: "Industry & Manufacturing",
     logo: profile1,
     companies: [
-      { name: "mrkitchen", url: "https://www.mrkitchen.com" }
+      { name: "mrkitchen", url: "https://www.instagram.com/mrkitchengh?igsh=dnIxMHljcXVqbDdp" }
     ]
   },
   {
@@ -48,7 +48,7 @@ const portfolios = [
     sector: "Finance",
     logo: profile2,
     companies: [
-      { name: "corebanc", url: "https://www.corebanc.com" }
+      { name: "corebanc", url: "https://www.corebanc.org" }
     ]
   }
 ]
@@ -84,7 +84,7 @@ export default function PortfolioManagementPage() {
       </header>
       <main className="flex-grow">
         <section className="container mx-auto px-4 py-16 text-center">
-          <h1 className="text-4xl font-bold mb-4 text-[#0033A1]">Portfolio Management.
+          <h1 className="text-4xl font-bold mb-4 text-[#0033A1]">Portfolio Management
 </h1>
           <p className="text-xl mb-8 text-gray-600">We believe in taking centre stage in leading  the change we want to see in our society. We accomplish this by applying and managing resources in Agriculture, Finance, Industry and manufacturing .</p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
