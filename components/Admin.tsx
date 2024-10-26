@@ -80,7 +80,7 @@ export default function AdminDashboard() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3001/api/partner', {
+      const response = await axios.post('https://kanassetmanagement.com/api/partner', {
         partnerId: selectedCustomer,
         capitalInvested,
         interestAccrued,
@@ -96,7 +96,7 @@ export default function AdminDashboard() {
   useEffect(() => {
     async function fetchCustomers() {
       try {
-        const response = await axios.get(`https://zenith-seven-mauve.vercel.app/api/partner`);
+        const response = await axios.get(`https://kanassetmanagement.com/api/partner`);
         setCustomers(
           response.data.map((customer: any) => ({
             value: customer._id,
@@ -114,7 +114,7 @@ export default function AdminDashboard() {
     e.preventDefault();
     if (partnerDetails.name && partnerDetails.email && partnerDetails.contact && partnerDetails.password) {
       try {
-        const response = await fetch('https://zenith-seven-mauve.vercel.app/api/register', {
+        const response = await fetch('https://kanassetmanagement.com/api/register', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

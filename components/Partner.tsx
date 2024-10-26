@@ -90,7 +90,7 @@ const router = useRouter();
   useEffect(() => {
     const fetchMembers = async () => {
       try {
-        const response = await axios.get(`https://zenith-seven-mauve.vercel.app/api/partner/partner-details`, {
+        const response = await axios.get(`https://kanassetmanagement.com/api/partner/partner-details`, {
           params: {
             partner: datas._id,
           },
