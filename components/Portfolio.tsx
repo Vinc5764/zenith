@@ -4,7 +4,7 @@ import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { ExternalLink } from "lucide-react"
-import logo from '@/public/kan-Photoroom.png'
+
 import HamburgerMenu from "@/components/HamburgerMenu"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -17,7 +17,7 @@ import {
 import profile from '@/public/gracefields.jpg'
 import profile1 from '@/public/corner.jpg'
 import profile2 from '@/public/midstack.jpg'
-
+import logo from '@/public/kan-logo-2-removebg-preview.png'
 
 const navLinks = [
   { href: "/management", label: "Management Consulting" },
