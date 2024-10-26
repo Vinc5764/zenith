@@ -46,8 +46,9 @@ export default function AccountingPage() {
       </header>
       <main className="flex-grow">
         <section className="container mx-auto px-4 py-16 text-center">
-          <h1 className="text-4xl font-bold mb-4 text-[#0033A1]">Expert Accounting Services</h1>
-          <p className="text-xl mb-8 text-gray-600">Providing comprehensive financial reporting and analysis for your business</p>
+          <h1 className="text-4xl font-bold mb-4 text-[#0033A1]">Accounting, Tax and Audit
+</h1>
+          <p className="text-xl mb-8 text-gray-600">Focus on running your business while we help you run the books.</p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {companies.map((company) => (
               <Card key={company.name} className="hover:shadow-lg transition-shadow duration-300">
