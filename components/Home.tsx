@@ -35,7 +35,7 @@ export default function FinancialServicesPage() {
         </div>
       </header>
       <main className="flex-grow ">
-        <section className="container bg-blue-50    text-center">
+        <section className="container bg-blue-50   flex items-center  justify-center  text-center">
           <div className="mb-8">
             <Image
               src={profile}
