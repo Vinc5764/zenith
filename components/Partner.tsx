@@ -12,7 +12,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import useTokenStore from '@/lib/store';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-
+import logo from '@/public/kan-logo-2-removebg-preview.png'
+import Link from 'next/link';
+import Image from 'next/image';
 export default function PartnerDashboard() {
   const [withdrawalAmount, setWithdrawalAmount] = useState('')
   const [withdrawalPortfolio, setWithdrawalPortfolio] = useState('')
@@ -117,7 +119,9 @@ const router = useRouter();
     <div className={`min-h-screen ${theme === 'dark' ? 'bg-[#001f3f] text-white' : 'bg-gray-100 text-[#001f3f]'}`}>
       <header className={`${theme === 'dark' ? 'bg-[#002a4f]' : 'bg-white'} shadow-sm`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          <h1 className={`text-2xl font-bold ${theme === 'dark' ? 'text-[#c9a55a]' : 'text-[#001f3f]'}`}>KAN</h1>
+          <Link href="/" className="flex items-center space-x-2">
+          <Image src={logo} alt="Logo" width={100} height={48} />
+        </Link>
           <div className="flex items-center space-x-4">
             <Button 
               variant="ghost" 
@@ -167,7 +171,7 @@ const router = useRouter();
         theme === 'dark' ? 'text-white' : 'text-[#001f3f]'
       }`}
     >
-      $
+       ₵
       {datas?.user?.capitalInvested.total +
         datas?.user?.interestAccrued.total}
     </p>
@@ -371,22 +375,22 @@ const router = useRouter();
   </CardHeader>
   <CardContent>
     <p className={`text-4xl font-extrabold mb-6 ${theme === 'dark' ? 'text-white' : 'text-[#001f3f]'}`}>
-      ${datas?.user?.capitalInvested.total}
+       ₵{datas?.user?.capitalInvested.total}
     </p>
     <div className="space-y-4">
       <div className={`${theme === 'dark' ? 'bg-[#1a4261] text-white p-4 rounded-lg hover:shadow-md transition duration-300' : 'bg-[#f5f7ff] text-[#001f3f] p-4 rounded-lg hover:shadow-md transition duration-300'}`}>
         <p className="text-lg font-medium">
-          <strong>Mr Kitchen:</strong> ${datas?.user?.capitalInvested.portfolio1}
+          <strong>Mr Kitchen:</strong>  ₵{datas?.user?.capitalInvested.portfolio1}
         </p>
       </div>
       <div className={`${theme === 'dark' ? 'bg-[#1a4261] text-white p-4 rounded-lg hover:shadow-md transition duration-300' : 'bg-[#f5f7ff] text-[#001f3f] p-4 rounded-lg hover:shadow-md transition duration-300'}`}>
         <p className="text-lg font-medium">
-          <strong>Didi Farm:</strong> ${datas?.user?.capitalInvested.portfolio2}
+          <strong>Didi Farm:</strong>  ₵{datas?.user?.capitalInvested.portfolio2}
         </p>
       </div>
       <div className={`${theme === 'dark' ? 'bg-[#1a4261] text-white p-4 rounded-lg hover:shadow-md transition duration-300' : 'bg-[#f5f7ff] text-[#001f3f] p-4 rounded-lg hover:shadow-md transition duration-300'}`}>
         <p className="text-lg font-medium">
-          <strong>Corebanc:</strong> ${datas?.user?.capitalInvested.portfolio3}
+          <strong>Corebanc:</strong>  ₵{datas?.user?.capitalInvested.portfolio3}
         </p>
       </div>
     </div>
@@ -402,22 +406,22 @@ const router = useRouter();
   </CardHeader>
   <CardContent>
     <p className={`text-4xl font-extrabold mb-6 ${theme === 'dark' ? 'text-white' : 'text-[#001f3f]'}`}>
-      Total: ${datas?.user?.interestAccrued.total}
+      ₵{datas?.user?.interestAccrued.total}
     </p>
     <div className="space-y-4">
       <div className={`${theme === 'dark' ? 'bg-[#1a4261] text-white p-4 rounded-lg hover:shadow-md transition duration-300' : 'bg-[#f5f7ff] text-[#001f3f] p-4 rounded-lg hover:shadow-md transition duration-300'}`}>
         <p className="text-lg font-medium">
-          <strong>Mr Kitchen:</strong> ${datas?.user?.interestAccrued.portfolio1}
+          <strong>Mr Kitchen:</strong>  ₵{datas?.user?.interestAccrued.portfolio1}
         </p>
       </div>
       <div className={`${theme === 'dark' ? 'bg-[#1a4261] text-white p-4 rounded-lg hover:shadow-md transition duration-300' : 'bg-[#f5f7ff] text-[#001f3f] p-4 rounded-lg hover:shadow-md transition duration-300'}`}>
         <p className="text-lg font-medium">
-          <strong>Didi Farm:</strong> ${datas?.user?.interestAccrued.portfolio2}
+          <strong>Didi Farm:</strong>  ₵{datas?.user?.interestAccrued.portfolio2}
         </p>
       </div>
       <div className={`${theme === 'dark' ? 'bg-[#1a4261] text-white p-4 rounded-lg hover:shadow-md transition duration-300' : 'bg-[#f5f7ff] text-[#001f3f] p-4 rounded-lg hover:shadow-md transition duration-300'}`}>
         <p className="text-lg font-medium">
-          <strong>Corebanc:</strong> ${datas?.user?.interestAccrued.portfolio3}
+          <strong>Corebanc:</strong>  ₵{datas?.user?.interestAccrued.portfolio3}
         </p>
       </div>
     </div>
