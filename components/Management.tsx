@@ -7,13 +7,13 @@ import { Card, CardContent } from "@/components/ui/card"
 import HamburgerMenu from "@/components/HamburgerMenu"
 import profile from '@/public/newnation.jpg'
 import profile1 from '@/public/citti.jpg'
-import profile2 from '@/public/logo-carbon.svg'
+// import profile2 from '@/public/logo-carbon.svg'
 
 import logo from '@/public/kan-logo-2-removebg-preview.png'
 const companies = [
   { name: "New Nation Delhi", logo: profile, url: "https://www.instagram.com/new_nation_deli?igsh=MWQ2YW1lbmRqbmIyeQ==" },
   { name: "CittiCredit", logo: profile1, url: "http://Mycitticreditonline.com" },
-  { name: "Carbon Farm", logo: profile2, url: "https://carbonfarm.tech" },
+  // { name: "Carbon Farm", logo: profile2, url: "https://carbonfarm.tech" },
 ]
 
 const navLinks = [
