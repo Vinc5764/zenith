@@ -11,6 +11,7 @@ const navLinks = [
   { href: "/accounting", label: "Accounting Tax & Audit" },
   { href: "/compliance", label: "Compliance" },
   { href: "/portfolio", label: "Portfolio Management" },
+   { href: "/our-team", label: "Our Team" },
 ]
 
 export default function FinancialServicesPage() {
