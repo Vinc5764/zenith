@@ -5,15 +5,13 @@ import { ExternalLink } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import HamburgerMenu from "@/components/HamburgerMenu"
-import profile from '@/public/service.jpg'
-import profile1 from '@/public/service1.jpg'
-import profile2 from '@/public/service2.jpg'
+// import profile from '@/public/service.jpg'
+import profile1 from '@/public/mrkitchen.jpg'
+// import profile2 from '@/public/service2.jpg'
 import logo from '@/public/kan-logo-2-removebg-preview.png'
 
 const companies = [
-  { name: "Accounting Firm A", logo: profile, url: "https://www.accountingfirma.com" },
-  { name: "Accounting Firm B", logo: profile1, url: "https://www.accountingfirmb.com" },
-  { name: "Accounting Firm C", logo: profile2, url: "https://www.accountingfirmc.com" },
+  { name: "Mr Kitchen", logo: profile1, url: "https://www.instagram.com/mrkitchengh?igsh=dnIxMHljcXVqbDdp" },
 ]
 
 const navLinks = [
