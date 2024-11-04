@@ -31,13 +31,13 @@ export const POST = async (req: any) => {
     });
 
     // SMS message content
-    const url = "https://www.johnkpikpi.com/";
+    const url = "https://kanassetmanagement.com/";
     const message = `Hello ${name},\n\nYour account has been successfully created.Visit ${url} to signin. Thank you for joining our mission\n\nRegards,\nTeam`;
   
 
     // Send SMS using mNotify
-    const apiKey = "qGMGejprSNybRF6uFewGQ3Ex7";
-    const senderId = "JK2024";
+    const apiKey = "OY5gUf0v1vwiGGzvUMtYIv3U9";
+    const senderId = "KAN";
 
     const mNotifyUrl = `https://apps.mnotify.net/smsapi?key=${apiKey}&to=${contact}&msg=${encodeURIComponent(
       message
