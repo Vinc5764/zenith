@@ -11,8 +11,9 @@ export const POST = async (req: any) => {
     // Parse incoming JSON data from the request body
     const { email, contact, name, password } =
       await req.json();
-
+    console.log(email);
     
+
 
     // Connect to MongoDB database
     await connectToDB();
@@ -27,7 +28,7 @@ export const POST = async (req: any) => {
       contact,
       name,
       password: hashedPassword,
-      role: "newmember",
+      role: "admin",
     });
 
     // SMS message content
