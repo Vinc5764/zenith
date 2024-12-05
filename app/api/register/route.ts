@@ -11,8 +11,9 @@ export const POST = async (req: any) => {
     // Parse incoming JSON data from the request body
     const { email, contact, name, password } =
       await req.json();
-
+    console.log(email);
     
+
 
     // Connect to MongoDB database
     await connectToDB();
@@ -27,17 +28,17 @@ export const POST = async (req: any) => {
       contact,
       name,
       password: hashedPassword,
-      role: "newmember",
+      role: "admin",
     });
 
     // SMS message content
-    const url = "https://www.johnkpikpi.com/";
+    const url = "https://kanassetmanagement.com/";
     const message = `Hello ${name},\n\nYour account has been successfully created.Visit ${url} to signin. Thank you for joining our mission\n\nRegards,\nTeam`;
   
 
     // Send SMS using mNotify
-    const apiKey = "qGMGejprSNybRF6uFewGQ3Ex7";
-    const senderId = "JK2024";
+    const apiKey = "OY5gUf0v1vwiGGzvUMtYIv3U9";
+    const senderId = "KAN";
 
     const mNotifyUrl = `https://apps.mnotify.net/smsapi?key=${apiKey}&to=${contact}&msg=${encodeURIComponent(
       message

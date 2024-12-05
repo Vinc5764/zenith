@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Check, ChevronsUpDown } from "lucide-react";
+import logo from '@/public/kan-logo-2-removebg-preview.png'
 import {
   Command,
   CommandEmpty,
@@ -26,6 +27,7 @@ import { cn } from '@/lib/utils';
 import { uploadFile } from '@/lib/upload';
 import { useRouter } from 'next/navigation';
 import useTokenStore from '@/lib/store';
+import Image from 'next/image';
 
 export default function AdminDashboard() {
   // const [selectedPartner, setSelectedPartner] = useState('');
@@ -155,7 +157,7 @@ export default function AdminDashboard() {
     <div className={`min-h-screen ${theme === 'dark' ? 'bg-[#001f3f] text-white' : 'bg-gray-100 text-[#001f3f]'}`}>
       <header className={`${theme === 'dark' ? 'bg-[#002a4f]' : 'bg-white'} shadow-sm`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          <h1 className={`text-2xl font-bold ${theme === 'dark' ? 'text-[#c9a55a]' : 'text-[#001f3f]'}`}>KAN</h1>
+          <Image src={logo} alt="Logo" width={100} height={48} />
           <div className="flex items-center space-x-4">
             <Button 
               variant="ghost" 
