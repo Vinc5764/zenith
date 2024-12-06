@@ -89,6 +89,11 @@ export default function AdminDashboard() {
         equity,
         uploadedFile
       });
+
+      if (response.data)
+      {
+        alert("partner data submitted successfully")
+      }
       console.log('Data saved:', response.data);
     } catch (error) {
       console.error('Error submitting data:', error);
