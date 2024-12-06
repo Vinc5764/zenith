@@ -28,12 +28,12 @@ export const POST = async (req: any) => {
       contact,
       name,
       password: hashedPassword,
-      role: "admin",
+      role: "newmember",
     });
 
     // SMS message content
     const url = "https://kanassetmanagement.com/";
-    const message = `Hello ${name},\n\nYour account has been successfully created.Visit ${url} to signin. Thank you for joining our mission\n\nRegards,\nTeam`;
+    const message = `Hello ${name},\n\nYour account has been successfully created.Visit ${url} to signin with your email:${email}  password:${password} . Thank you for joining our mission\n\nRegards,\nTeam,`;
   
 
     // Send SMS using mNotify
