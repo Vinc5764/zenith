@@ -90,7 +90,7 @@ export default function AdminDashboard() {
         uploadedFile
       });
 
-      if (response.data)
+      if (response)
       {
         alert("partner data submitted successfully")
       }
