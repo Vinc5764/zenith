@@ -21,7 +21,7 @@ import PartnerDashboard from "@/components/Partner";
 import AdminDashboard from "@/components/Admin";
 
 
-const baseURL = "http://localhost:3001";
+const baseURL = "https://kanassetmanagement.com";
 
 const HomePage = () => {
   const { userType, datas, setUserType }: any = useTokenStore();
