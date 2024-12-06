@@ -90,7 +90,7 @@ export default function AdminDashboard() {
         uploadedFile
       });
 
-      if (response.data)
+      if (response)
       {
         alert("partner data submitted successfully")
       }
@@ -103,7 +103,7 @@ export default function AdminDashboard() {
   useEffect(() => {
     async function fetchCustomers() {
       try {
-        const response = await axios.get(`https://kanassetmanagement.com/api/partner`);
+        const response = await axios.get(`https://kanassetmanagement.com/api/partner/fetch`);
         setCustomers(
           response.data.map((customer: any) => ({
             value: customer._id,
