@@ -10,10 +10,10 @@ export const GET = async (req: any, { params }: any) => {
     // Connect to MongoDB database
     await connectToDB();
 
-    // Retrieve all users from the database
-    const users = await User.find(); // Use appropriate query if needed
+    // Retrieve all users from the database with `.exec()`
+    const users = await User.find().exec(); // Explicitly execute the query
 
-    // Respond with list of users
+    // Respond with the list of users
     return NextResponse.json(users);
   } catch (error) {
     // Handle errors
