@@ -12,7 +12,6 @@ const UserrSchema = new Schema(
       default: "member",
     },
     contact: { type: String, required: false },
-
     capitalInvested: {
       total: {
         type: Number,
