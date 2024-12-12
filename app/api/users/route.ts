@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { connectToDB } from "@/lib/connect";
 import { NextResponse } from "next/server";
-import User from "../../model/user.model";
+import User from "../model/user.model";
 
 
 export const GET = async (req: any, { params }: any) => {
