@@ -6,22 +6,29 @@ const MONGODB_URL = "mongodb+srv://simonadjei70:kanasset@cluster0.zn12f.mongodb.
 console.log(MONGODB_URL);
 
 
-const cached = (global as any).mongoose || { conn: null, promise: null }
+let isConnected = false; // Track connection status
 
 export const connectToDB = async () => {
-  if (cached.conn) return cached.conn;
+  if (isConnected) {
+    console.log("MongoDB is already connected");
+    return;
+  }
 
-  if (!MONGODB_URL) throw new Error("MONGODB_URL is missing")
+  if (!MONGODB_URL) {
+    throw new Error("MONGODB_URL is missing");
+  }
 
-  cached.promise =
-    cached.promise ||
-    mongoose.connect(MONGODB_URL, {
+  try {
+    const connection = await mongoose.connect(MONGODB_URL, {
       dbName: "testing-mentee",
-      bufferCommands: false,
-      connectTimeoutMS: 40000,
+     
+      
     });
 
-  cached.conn = await cached.promise;
-
-  return cached.conn;
+    isConnected = true; // Set the connection status
+    console.log(`MongoDB connected to ${connection.connection.host}`);
+  } catch (error) {
+    console.error("Error connecting to MongoDB:", error.message);
+    throw new Error("Failed to connect to MongoDB");
+  }
 };
