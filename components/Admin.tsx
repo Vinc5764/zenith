@@ -103,7 +103,7 @@ export default function AdminDashboard() {
   useEffect(() => {
     async function fetchCustomers() {
       try {
-        const response = await axios.get(`https://kanassetmanagement.com/api/partner/fetch`);
+        const response = await axios.get(`https://kanassetmanagement.com/api/users`);
         setCustomers(
           response.data.map((customer: any) => ({
             value: customer._id,
