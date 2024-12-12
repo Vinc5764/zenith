@@ -19,8 +19,8 @@ export const GET = async (req: any, { params }: any) => {
 
     // const { mymembers } = params;
 
-    const { searchParams } = new URL(req.url);
-    const partner = searchParams.get("partner");
+
+  
     // Retrieve all users from the database
     const users = await User.find({role:"member"}); // Use appropriate query if needed
 
