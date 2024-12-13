@@ -8,7 +8,7 @@ import User from "../model/user.model";
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-export const GET = async (req: any, { params }: any) => {
+export const POST = async (req: any) => {
   try {
     // Connect to MongoDB database
     await connectToDB();
