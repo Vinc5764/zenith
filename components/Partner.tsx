@@ -30,15 +30,16 @@ export default function PartnerDashboard() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  const handleDepositSubmit = async (e: React.FormEvent) => {
+  const handleWithdrawalSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError("");
     setSuccess("");
 
     const withdrawalData = {
-      amount: depositAmount,
-      portfolio: depositPortfolio,
+      userId:datas.user._id,
+      amount: withdrawalAmount,
+      portfolio: withdrawalPortfolio,
       period: period,
     };
 
@@ -47,13 +48,13 @@ export default function PartnerDashboard() {
 
     try {
       // Sending the data to the backend
-      // const response = await fetch("https://zenith-seven-mauve.vercel.app/api/withdrawals", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify(withdrawalData),
-      // });
+      const response = await fetch("http://localhost:3000/api/withdraw", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(withdrawalData),
+      });
 
       alert("Deposit request sent successfully")
 
@@ -83,11 +84,7 @@ const router = useRouter();
     router.push("/sign-in");
   };
 
-  const handleWithdrawalSubmit = (event) => {
-    event.preventDefault()
-    // Here you would typically send the withdrawal request to your backend
-    alert('Withdrawal request submitted successfully u will be contacted shortly')
-  }
+ 
 
   useEffect(() => {
     const fetchMembers = async () => {
@@ -230,7 +227,7 @@ const router = useRouter();
             Initiate Deposit
           </DialogTitle>
         </DialogHeader>
-        <form onSubmit={handleDepositSubmit} className="space-y-4">
+        <form  className="space-y-4">
           <div>
             <Label htmlFor="depositAmount">Amount</Label>
             <Input

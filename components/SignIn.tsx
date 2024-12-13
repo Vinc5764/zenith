@@ -28,7 +28,7 @@ export default function SignIn() {
     setLoading(true);
 
     try {
-      const res = await fetch('https://kanassetmanagement.com/api/login', {
+      const res = await fetch('http://localhost:3000/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
