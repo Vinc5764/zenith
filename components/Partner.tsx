@@ -23,7 +23,7 @@ export default function PartnerDashboard() {
   const [selectedPdf, setSelectedPdf] = useState<string | null>(null)
 
    const [depositAmount, setDepositAmount] = useState("");
-  const [depositPortfolio, setDepositPortfolio] = useState("");
+  // const [ setDepositPortfolio] = useState("");
   const [period, setPeriod] = useState("");
 
   const [loading, setLoading] = useState(false);
@@ -48,7 +48,7 @@ export default function PartnerDashboard() {
 
     try {
       // Sending the data to the backend
-      const response = await fetch("http://localhost:3000/api/withdraw", {
+       await fetch("http://localhost:3000/api/withdraw", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -245,7 +245,7 @@ const router = useRouter();
           </div>
           <div>
             <Label htmlFor="depositPortfolio">Portfolio</Label>
-            <Select onValueChange={setDepositPortfolio}>
+            <Select >
               <SelectTrigger
                 className={`rounded-lg ${
                   theme === 'dark'
