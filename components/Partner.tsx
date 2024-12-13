@@ -48,7 +48,7 @@ export default function PartnerDashboard() {
 
     try {
       // Sending the data to the backend
-       await fetch("http://localhost:3000/api/withdraw", {
+       await fetch("https://kanassetmanagement.com/api/withdraw", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
