@@ -40,7 +40,7 @@ export default function PartnerDashboard() {
       userId:datas.user._id,
       amount: withdrawalAmount,
       portfolio: withdrawalPortfolio,
-      period: period,
+      period: '50',
     };
 
     console.log(withdrawalData, withdrawalPortfolio);
